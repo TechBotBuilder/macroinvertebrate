@@ -18,6 +18,9 @@ from keras.models import model_from_json
 import os
 import pickle
 
+#http://stackoverflow.com/a/36150375 was helpful here
+NB_CLASSES = len(next(os.walk('data/training'))[1])
+
 IMAGE_DIMENSION = 32
 BATCH_SIZE = 32
 NB_EPOCH = 100
@@ -37,7 +40,7 @@ if __name__ == "__main__":
     model.add(Dense(HIDDEN_SIZE))
     model.add(Activation('relu'))
     model.add(Dropout(DROPOUT))
-    model.add(Dense(50))#outputs to 50 categories
+    model.add(Dense(NB_CLASSES))#outputs to 50 categories
     model.add(Activation('softmax'))#only one true at a time
     model.compile(optimizer='adam', loss='categorical_crossentropy')#adam is rmsprop w/ momentum, apparently
     
