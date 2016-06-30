@@ -15,6 +15,9 @@ from keras.preprocessing.image import ImageDataGenerator
 
 from keras.models import model_from_json
 
+import os
+import pickle
+
 IMAGE_DIMENSION = 32
 BATCH_SIZE = 32
 NB_EPOCH = 100
@@ -62,14 +65,26 @@ if __name__ == "__main__":
     validation_generator = image_loader.flow_from_directory('data/validation', **options)
     
     #test_generator = image_loader.flow_from_directory('data/test', **options)
-    #we won't use this until the end.
+    #we won't use this until the end, once we've trained a few models.
     
     history = model.fit_generator(
         training_generator,
-        samples_per_epoch=int(1000/BATCH_SIZE) * BATCH_SIZE, #whole number of batches
-        nb_epoch=NB_EPOCH,
-        validation_data=validation_generator,
-        nb_validation_samples=100)
+        samples_per_epoch = int(500/BATCH_SIZE)*BATCH_SIZE,
+        nb_epoch = NB_EPOCH,
+        validation_data = validation_generator,
+        nb_validation_samples = 100)
+    
+    print("Training done. Saving everything...")
+    
+    check_directories = (
+        'models/{}'.format(VERSION),
+        'models/{}/training_sessions'.format(VERSION),
+        'models/{}/training_sessions/{}'.format(VERSION, SUBVERSION)
+        )
+    #help from http://stackoverflow.com/a/273227
+    for checkdir in check_directories:
+        if not os.path.exists(checkdir):
+            os.makedirs(checkdir)
     
     model_architecture = model.to_json()
     with open('models/{}/architecture.json'.format(VERSION), 'w') as f:
@@ -77,7 +92,7 @@ if __name__ == "__main__":
     
     model.save_weights('models/{}/training_sessions/{}/weights.hdf5'.format(VERSION, SUBVERSION))
     
-    with open('models/{}/training_sessions/{}/history.txt'.format(VERSION, SUBVERSION), 'w') as f:
-        f.write(history)
+    with open('models/{}/training_sessions/{}/history.txt'.format(VERSION, SUBVERSION), 'wb') as f:
+        pickle.dump(history, f)
     
-    
+    print("Done.")
