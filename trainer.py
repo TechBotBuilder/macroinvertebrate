@@ -58,9 +58,10 @@ if __name__ == "__main__":
         shear_range=0.1,
         zoom_range=[1, 1.2],
         fill_mode='constant',
-        cval=0,
-        horizontal_flip=True,
-        vertical_flip=True,
+        cval=0
+        #,        #horizontal_flip=True,        #vertical_flip=True
+        #we don't want horizontal or vertical flip because of the difference
+        #between right and left-handed snails
         )
     
     options = {
