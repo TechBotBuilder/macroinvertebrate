@@ -20,29 +20,36 @@ import pickle
 
 #http://stackoverflow.com/a/36150375 was helpful here
 NB_CLASSES = len(next(os.walk('data/training'))[1])
+#^counts how many directories are in ^
 
 IMAGE_DIMENSION = 32
 BATCH_SIZE = 32
 NB_EPOCH = 100
-HIDDEN_SIZE = 5000
-DROPOUT = 0.3
+
 VERSION = "0"
 SUBVERSION = "0"
+
+NUM_HIDDEN_LAYERS = 2
+HIDDEN_SIZE = 5000
+DROPOUT = 0.5
 
 ##First go - simple deep dense network
 if __name__ == "__main__":
     print("Starting program...")
-    #make a (1024 input) -> (5000 hidden) -> (5000 hidden) -> (50 output) network
+    #make a (image input) -> (NUM_HIDDEN_LAYERS * )(hidden) -> (classification output) network
     model = Sequential()
     model.add(Dense(HIDDEN_SIZE, input_dim = IMAGE_DIMENSION ** 2))
     model.add(Activation('relu'))
     model.add(Dropout(DROPOUT))
-    model.add(Dense(HIDDEN_SIZE))
-    model.add(Activation('relu'))
-    model.add(Dropout(DROPOUT))
+    for _ in range(NUM_HIDDEN_LAYERS - 1):
+        model.add(Dense(HIDDEN_SIZE))
+        model.add(Activation('relu'))
+        model.add(Dropout(DROPOUT))
     model.add(Dense(NB_CLASSES))#outputs to 50 categories
     model.add(Activation('softmax'))#only one true at a time
-    model.compile(optimizer='adam', loss='categorical_crossentropy')#adam is rmsprop w/ momentum, apparently
+    model.compile(optimizer='sgd', loss='categorical_crossentropy')
+    #adam is rmsprop w/ momentum, apparently
+    #but let's try sgd for the moment
     
     image_loader = ImageDataGenerator(
         rotation_range=45.0,
