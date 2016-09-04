@@ -4,12 +4,8 @@
 #By Maxwell Budd
 #techbotbuilder.com/neuralnet
 
-#from keras.models import Model
-#from keras.layers import Input
-#from keras.layers import LSTM
-#from keras.layers import merge
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
+from keras.layers import Dense, Activation
 from keras.layers import Reshape
 from keras.optimizers import SGD
 
@@ -20,17 +16,15 @@ from keras.models import model_from_json
 import os
 import pickle
 
-IMAGE_DIMENSION = 64#32#16#
-BATCH_SIZE = 42#64#32#128#256#64
-NB_EPOCH = 80
-SAMPLES_PER_EPOCH = 4096##2048##1028
+IMAGE_DIMENSION = 64
+BATCH_SIZE = 256
+SAMPLES_PER_EPOCH = 2**13#8192
+NB_EPOCH = 10
 
-VERSION = "10"
-SUBVERSION = "2"
+VERSION = "svm"
+SUBVERSION = 0
 
-NUM_HIDDEN_LAYERS = 2#3#2#
-HIDDEN_SIZE = 2**12#2**13#4096#1024#
-DROPOUT = 0#0.5
+HIDDEN_SIZE = 2**12 #Just over 1/256 of a million #much higher, I get MemoryError
 
 NUM_VALIDATION_SAMPLES = 113#128
 
@@ -47,15 +41,14 @@ def log(message):
 
 ##First go - simple deep dense network
 if __name__ == "__main__":
-    log("Starting program...")
-    if SUBVERSION=="0":
-        #make a (image input) -> (NUM_HIDDEN_LAYERS * )(hidden) -> (classification output) network
+    log("Starting SVM Training...")
+    if int(SUBVERSION)==0:
+        #make a (image input) -> (Nonlinear high-dimensional kernal) -> (classification output) network
         model = Sequential()
         model.add(Reshape((IMAGE_DIMENSION**2,), input_shape=(1, IMAGE_DIMENSION, IMAGE_DIMENSION)))
-        for _ in range(NUM_HIDDEN_LAYERS):
-            model.add(Dense(HIDDEN_SIZE))
-            model.add(Activation('relu'))
-            model.add(Dropout(DROPOUT))
+        model.add(Dense(HIDDEN_SIZE, trainable=False))
+        ## ^ https://keras.io/getting-started/faq/#how-can-i-freeze-keras-layers
+        model.add(Activation('sigmoid'))
         model.add(Dense(NB_CLASSES))#outputs to some categories
         model.add(Activation('softmax'))#only one true at a time
     else:
@@ -63,25 +56,17 @@ if __name__ == "__main__":
             model = model_from_json(f.read())
         model.load_weights('models/{}/training_sessions/{}/weights.hdf5'.format(VERSION, int(SUBVERSION)-1))
     
-    #optimizer=SGD(lr=0.001, momentum=0.6, decay=0.0, nesterov=True)
-    optimizer='adam'
-    #optimizer='rmsprop'
-    #optimizer=SGD(lr=0.01, momentum=0.9)
+    optimizer=SGD(lr=0.01, momentum=0.9, decay=1e-6)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
-    #adam is rmsprop w/ momentum, apparently
-    #but let's try sgd for the moment
     
     image_loader = ImageDataGenerator(
-        rotation_range=15,#45.0,
+        rotation_range=15,
         width_shift_range=0.1,
         height_shift_range=0.1,
         shear_range=0.1,
         zoom_range=[3/2, 2/3],
         fill_mode='constant',
         cval=0
-        #,        #horizontal_flip=True,        #vertical_flip=True
-        #we don't want horizontal or vertical flip because of the difference
-        #between right and left-handed snails
         )
     
     options = {
@@ -91,9 +76,8 @@ if __name__ == "__main__":
         'batch_size': BATCH_SIZE
         }
     
-    training_generator = image_loader.flow_from_directory('{}/training'.format(DATA_DIRECTORY), **options)#, save_to_dir='sample_preprocessed_data')
+    training_generator = image_loader.flow_from_directory('{}/training'.format(DATA_DIRECTORY), **options)
     
-    #validation_image_loader = ImageDataGenerator()
     validation_generator = image_loader.flow_from_directory('{}/validation'.format(DATA_DIRECTORY), **options)
     
     #test_generator = image_loader.flow_from_directory('data/test', **options)
