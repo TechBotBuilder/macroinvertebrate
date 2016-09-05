@@ -1,0 +1,4 @@
+Monday Plan:
+For the final week of the first three weeks, I will try to find an optimum architecture for the SVM-like model. To do this, various hyperparameters will be varied until a seemingly optimal combination is found. Among these hyperparameters are learning rate, optimizer (stocastic gradient descent, rmsprop, momentum, and others), support vector size, input image dimension, and training batch size.
+From the classification accuracy resulting after the first few epochs of training, each combination will be compared and the top few selected for further training. These will be compared on their validation performance after extensive training, and the best selected, evaluated on the training dataset, and its performance logged to be compared with the coming week's models.
+
