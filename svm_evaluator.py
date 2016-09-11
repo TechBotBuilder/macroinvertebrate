@@ -29,7 +29,6 @@ if __name__ == "__main__":
     sortby = sortbyops[0]
     if len(argv) > 1:
         sortby = argv[1]
-        
         if sortby not in sortbyops:
             msg = "Sort by one of:"
             for sb in sortbyops:
