@@ -4,7 +4,10 @@
 #By Maxwell Budd
 #techbotbuilder.com/neuralnet
 
-##Estimate this will run in (3×2×2×2×2×(3×3+3+1))×(3×1.5÷(60×24)) = 1.9 days
+##Estimate this will run in (3×2×2×2×2×(3×3+3+1))×(3×1.5÷(60×24)) = 1.9 days.
+#    In actuality, on my desktop each hyperparameter combination ran in approximately
+#  two minutes, so the total time was (3×2×2×2×2×(3×3+3+1))×(2÷(60×24)) = 0.87 days.
+
 
 from math import log10
 
