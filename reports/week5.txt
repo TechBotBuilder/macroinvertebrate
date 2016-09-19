@@ -1,2 +1,2 @@
 Monday Plan:
-I should do a bit of code cleanup this week. I also will start the gridsearch program, which may take a week to finish.
+I should do a bit of code cleanup this week. I also will start running the gridsearch program, which may take around a week to finish.
