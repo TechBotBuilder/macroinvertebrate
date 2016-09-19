@@ -7,7 +7,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.layers import Reshape
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adamax
 
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -16,15 +16,15 @@ from keras.models import model_from_json
 import os
 import pickle
 
-IMAGE_DIMENSION = 64
-BATCH_SIZE = 256
-SAMPLES_PER_EPOCH = 2**13#8192
-NB_EPOCH = 10
+IMAGE_DIMENSION = 32
+BATCH_SIZE = 64
+SAMPLES_PER_EPOCH = 2**11
+NB_EPOCH = 100
 
-VERSION = "svm"
+VERSION = "svm_grid_3"
 SUBVERSION = 0
 
-HIDDEN_SIZE = 2**12 #Just over 1/256 of a million #much higher, I get MemoryError
+HIDDEN_SIZE = 2**10 #1024
 
 NUM_VALIDATION_SAMPLES = 113#128
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             model = model_from_json(f.read())
         model.load_weights('models/{}/training_sessions/{}/weights.hdf5'.format(VERSION, int(SUBVERSION)-1))
     
-    optimizer=SGD(lr=0.01, momentum=0.9, decay=1e-6)
+    optimizer=Adamax()
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     
     image_loader = ImageDataGenerator(
@@ -79,9 +79,6 @@ if __name__ == "__main__":
     training_generator = image_loader.flow_from_directory('{}/training'.format(DATA_DIRECTORY), **options)
     
     validation_generator = image_loader.flow_from_directory('{}/validation'.format(DATA_DIRECTORY), **options)
-    
-    #test_generator = image_loader.flow_from_directory('data/test', **options)
-    #we won't use this until the end, once we've trained a few models.
     
     history = model.fit_generator(
         training_generator,

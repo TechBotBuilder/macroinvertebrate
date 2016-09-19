@@ -2,3 +2,6 @@ Monday Plan:
 Today marks the start of the second three weeks, during which I will work with feed-forward (deep) networks. This week I will write a program to train deep networks. If there is time, I will start training models with different hyperparameters, especially number of layers and layer size, and continue that next week so that each option can train for more runs over the data before they are compared.
 In the (unlikely) event that there is overfitting, I will also experiment with different levels of dropout.
 I expect that different optimizers will also show a greater divide in performance, since some are specifically designed with deep networks in mind, like RMSProp.
+
+Report:
+For lack of time, I have not started training yet, but I do have a gridsearch and final training program that should work. I also have an idea on how to clean up the looping code for gridsearch, as well as refactoring shared code, which I will do in the coming week.
