@@ -4,11 +4,6 @@
 #By Maxwell Budd
 #techbotbuilder.com/neuralnet
 
-##Estimate this will run in (3×2×2×2×2×(3×3+3+1))×(3×1.5÷(60×24)) = 1.9 days.
-#    In actuality, on my desktop each hyperparameter combination ran in approximately
-#  two minutes, so the total time was (3×2×2×2×2×(3×3+3+1))×(2÷(60×24)) = 0.87 days.
-
-
 from math import log10
 
 from keras.models import Sequential
@@ -41,15 +36,21 @@ def log(message):
     print("[{}] {}".format(str(datetime.now())[:19], message))
 
 params={
-    "learning_rates":[2**-1,2**-4,2**-8],
-    "hidden_sizes":[2**8,2**10,2**12],
-    "num_hidden_layers":[1,3,5],
+    "learning_rates":[2**-3,2**-6],
+    "hidden_sizes":[2**5,2**8,2**11],
+    "num_hidden_layers":[2,4],
     "batch_sizes":[2**6,2**8],
     "image_dimensions":[2**4,2**5],
     "activations":['sigmoid','relu'],
-    "momentums":[0,0.5,0.9],
+    "momentums":[0,0.9],
     "losses":['categorical_crossentropy','mean_squared_error'],
     "optimizers":[[SGD,['momentums', 'learning_rates']], [RMSprop, ['learning_rates']], [Adamax,[]]]}
+
+num_combos=1
+for param in params:
+    if param not in ("learning_rates", "momentums", "optimizers"):
+        num_combos = num_combos * len(params[param])
+num_combos = num_combos*(1+len(params['learning_rates'])*(1+len(params['momentums'])))
 
 counter = 0
 
@@ -72,8 +73,9 @@ def train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION
         SUBVERSION = SUBVERSION + ".l{}".format(abs(int(log10(learning_rate)/log10(2)))) #eg, add "lx" where learningrate was 2^-x
     if momentum:
         SUBVERSION = SUBVERSION + ".m{}".format(momentum)
+    SUBVERSION = SUBVERSION + ".D{}".format(NUM_HIDDEN_LAYERS)
     
-    log("Starting SVM #{:0>3}/624: {} in training...".format(counter, SUBVERSION))
+    log("Starting FF #{:0>3}/{}: {} in training...".format(counter, num_combos, SUBVERSION))
     model = Sequential()
     model.add(Reshape((IMAGE_DIMENSION**2,), input_shape=(1, IMAGE_DIMENSION, IMAGE_DIMENSION)))
     for _ in range(NUM_HIDDEN_LAYERS):
@@ -112,10 +114,19 @@ def train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION
         nb_val_samples = NUM_VALIDATION_SAMPLES,
         verbose=0)
     
-    log("Done.")
     h = history.history
+    log("Done: acc {:.3}".format(h['acc'][-1]))
     return (SUBVERSION, {'loss':h['loss'][-1], 'val_loss':h['val_loss'][-1], 'acc':h['acc'][-1], 'val_acc':h['val_acc'][-1]})
 
+def save(results):
+    try:
+        with open("models/{}/results.pickle".format(VERSION), 'rb') as f:
+            prev_results = pickle.load(f)
+    except:
+        prev_results = []
+    results = prev_results + results
+    with open("models/{}/results.pickle".format(VERSION), 'wb') as f:
+        pickle.dump(results, f)
 
 ##First go - simple deep dense network
 if __name__ == "__main__":
@@ -133,6 +144,8 @@ if __name__ == "__main__":
     for HIDDEN_SIZE in params['hidden_sizes']:
       for NUM_HIDDEN_LAYERS in params['num_hidden_layers']:
         for BATCH_SIZE in params['batch_sizes']:
+          save(results)
+          results = []
           for IMAGE_DIMENSION in params['image_dimensions']:
             for activation in params['activations']:
               for loss in params['losses']:
@@ -145,6 +158,5 @@ if __name__ == "__main__":
                       results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate))
                 else:
                   results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss))
-  with open("models/{}/results.pickle".format(VERSION), 'wb') as f:
-    pickle.dump(results, f)
+  save(results)
 
