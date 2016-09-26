@@ -1,0 +1,2 @@
+Week 6 Plan:
+First I need to complete the gridsearch for feedforward architecture, starting at model number 358. Then I will compare the different models' performances based on a (validation accuracy)*(training accuracy) metric, as in the first three weeks. Finally, I will need to train the three best models for 100 epochs over the data, again as was done in the first three weeks, and report the results.
