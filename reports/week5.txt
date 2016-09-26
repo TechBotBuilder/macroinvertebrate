@@ -1,2 +1,6 @@
 Monday Plan:
 I should do a bit of code cleanup this week. I also will start running the gridsearch program, which may take around a week to finish.
+
+Report:
+Gridsearch has been killed by my computer twice at or around the model I have labeled "FF #358/672: SGDH2048.N256.I16.Asigm.Lmean.l3.m0.9.D4".
+The second time I changed the program to back up the results every once in a while, so I have some data. I will need more time, unfortunately, to complete the gridsearch. Furthermore, I have not accomplished any code cleanup.
