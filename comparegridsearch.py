@@ -5,7 +5,7 @@ import collections
 import operator
 
 def error(msg):
-    
+    print(msg)
     exit(2) #https://docs.python.org/2/library/sys.html#sys.exit -> 2=command line syntax errors
 
 def compare(version, sortby, num_output, output=False):
