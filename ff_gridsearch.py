@@ -18,6 +18,8 @@ from keras.models import model_from_json
 import os
 import pickle
 
+STARTAT = 0
+
 SAMPLES_PER_EPOCH = 2**11
 NB_EPOCH = 3
 
@@ -53,6 +55,9 @@ for param in params:
 num_combos = num_combos*(1+len(params['learning_rates'])*(1+len(params['momentums'])))
 
 counter = 0
+def inc():
+    global counter
+    counter = counter + 1
 
 image_loader = ImageDataGenerator(
     rotation_range=15,
@@ -65,8 +70,7 @@ image_loader = ImageDataGenerator(
     )
 
 def train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate=None, momentum=None):
-    global counter
-    counter = counter + 1
+    inc()
     SUBVERSION = (Optimizer.__name__ +
         "H{}.N{}.I{}.A{}.L{}".format(HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation[:4], loss[:4]) )
     if learning_rate:
@@ -153,10 +157,13 @@ if __name__ == "__main__":
                   for learning_rate in params['learning_rates']:
                     if 'momentums' in optimizer_args:
                       for momentum in params['momentums']:
-                        results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate, momentum))
+                        if counter < STARTAT: inc()
+                        else: results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate, momentum))
                     else:
-                      results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate))
+                      if counter < STARTAT: inc()
+                      else: results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss, learning_rate))
                 else:
-                  results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss))
+                  if counter < STARTAT: inc()
+                  else: results.append(train(Optimizer, NUM_HIDDEN_LAYERS, HIDDEN_SIZE, BATCH_SIZE, IMAGE_DIMENSION, activation, loss))
   save(results)
 
