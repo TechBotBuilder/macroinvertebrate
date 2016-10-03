@@ -1,2 +1,10 @@
 Week 6 Plan:
 First I need to complete the gridsearch for feedforward architecture, starting at model number 358. Then I will compare the different models' performances based on a (validation accuracy)*(training accuracy) metric, as in the first three weeks. Finally, I will need to train the three best models for 100 epochs over the data, again as was done in the first three weeks, and report the results.
+
+Report:
+This week, I finished the gridsearch over feedfoward architecture hyperparameters, training 672 models for three sweeps over the training images each. The three best hyperparameter combinations were chosen for further training based on the same metric as was used for the SVM model. I had to run training four times because my computer kept running out of memory; after the first failure, I changed the code to save results every few combinations, and added code to resume training after a specific model number, which was useful since the program crashed twice more.
+I was able to reuse the program for model evaluation with minor changes. I also edited the gridsearch result comparison program for easier usage and reusability.
+The gridsearch results were slightly better than the SVM results, and it appeared that losses were dropping throughout the extended training period, while for the SVM code accuracy stabalized at around 10% after just a few cycles of training. Because of this, I believe the feedfoward models can improve with more training, so, as I work on code for next week, I will continue training the top model to see the extent to which its performance continues to increase.
+Model 1:  Training accuracy 11.3%, validation accuracy 10.6%, test accuracy 13.7%
+Model 2:  Training accuracy 8.23%, validation accuracy 7.08%, test accuracy 11.9%
+Model 3:  Training accuracy 11.3%, validation accuracy 9.73%, test accuracy 12.8%
