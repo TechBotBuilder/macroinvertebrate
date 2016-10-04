@@ -1,0 +1,5 @@
+Week 7 Plan:
+As noted in week 6's report, I will continue training the best feedfoward model throughout the week until it stops improving.
+This three weeks will focus on the development of unsupervised models, which may require some innovation on my part, since the typical unsupervised learning method I have learned about is the Boltzmann machine, which is meant input vectors with binary components, since it essentially settles to a minimal-energy corner of a hypercube. Maybe I can develop this geometrical idea further. Whether I do or not, I will compare training performance between thresholded images (which are binary) and unthresholded images fed to the Boltzmann machine as though working with raw probabilities as in the probabilistic interpretation and shortcut sometimes used in Boltzmann machine learning.
+I will also see if there are other unsupervised methods described online that I might be able to implement.
+In terms of programming, this week I will write the initial code for unsupervised training, which will be interesting since keras does not have unsupervised learning in its main branch. Next week will be for testing and gridsearch.
