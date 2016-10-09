@@ -1,15 +1,19 @@
 ##evaluate_model.py
 ##Evaluate the classification accuracy of model
-# run like $python evaluate_model.py <model_name> [<subversion>]
+# run like $python evaluate_model.py <model_name> <subversion> [<test/validation/training>]
 
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import model_from_json
 import os
 
 from sys import argv
-assert len(argv)==3
+assert 4>=len(argv)>=3
 VERSION = argv[1]
 SUBVERSION = argv[2]
+if len(argv)==4:
+    drawfrom = argv[3]
+else:
+    drawfrom = 'test'
 
 DATA_DIRECTORY = 'dog_data'
 NB_CLASSES = len(next(os.walk('{}/training'.format(DATA_DIRECTORY)))[1])
@@ -28,6 +32,6 @@ options = {
     'batch_size': BATCH_SIZE,
     'shuffle': False
     }
-test_generator = image_loader.flow_from_directory('{}/test'.format(DATA_DIRECTORY), **options)
+test_generator = image_loader.flow_from_directory('{}/{}'.format(DATA_DIRECTORY, drawfrom), **options)
 accuracies = model.evaluate_generator(test_generator, val_samples=test_generator.N)
 print("Test accuracy: {}\tTest loss: {}".format(round(accuracies[1],4), round(accuracies[0],4)))
