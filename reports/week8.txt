@@ -1,0 +1,2 @@
+Week 8 Plan:
+I must complete my tasks from last week's plan this week and begin training some models. Thus, this week will consist of writing code for RBM training, as well as training models. Next week can be used to compare models and do more extensive training of the best.
