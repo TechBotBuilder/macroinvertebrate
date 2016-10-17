@@ -1,2 +1,5 @@
 Week 8 Plan:
 I must complete my tasks from last week's plan this week and begin training some models. Thus, this week will consist of writing code for RBM training, as well as training models. Next week can be used to compare models and do more extensive training of the best.
+
+Week 8 Review:
+I have located a library to work with restricted boltzmann machines in keras at https://github.com/wuaalb/keras_extensions, which I intend to use to leverage keras and not go through the time-consuming process of developing my own code. I will have to begin training in the coming week.
