@@ -8,11 +8,11 @@ from sys import argv
 def avg(values):
     return sum(values)/len(values)
 
-def smoothed(values, kernel=5):
+def smoothed(values, kernal=5):
     newvalues=values[:]
     oldvalues=values[:]
     for i in range(len(values)):
-        surrounding = [i+k for k in range(-5,5) if i+k >=0 and i+k<len(values)]
+        surrounding = [i+k for k in range(-kernal+1,kernal) if i+k >=0 and i+k<len(values)]
         newvalues[i]=avg([oldvalues[pt] for pt in surrounding])
     return newvalues
 
@@ -20,7 +20,7 @@ assert 4>=len(argv)>=3
 version = argv[1]
 subversion = argv[2]
 if len(argv)==4:
-    smoothing=argv[3]
+    smoothing=int(argv[3])
 else:
     smoothing=5
 
