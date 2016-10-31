@@ -1,4 +1,5 @@
 #convnet.py
+#much helped by https://github.com/fchollet/keras/blob/master/examples/cifar10_cnn.py
 import resources as r
 from keras.models import Sequential
 from keras.layers import Dense, Convolution2D, MaxPooling2D, Dropout, Activation, Flatten
