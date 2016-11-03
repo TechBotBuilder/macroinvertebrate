@@ -51,9 +51,9 @@ def save_architecture(model, VERSION):
         f.write(model_architecture)
 
 def save_history(history, VERSION, SUBVERSION):
-    import pickle
+    import dill
     with open('models/{}/training_sessions/{}/history.txt'.format(VERSION, SUBVERSION), 'wb') as f:
-        pickle.dump(history, f)
+        dill.dump(history, f)
 
 def save(model, history, VERSION, SUBVERSION):
     save_model(model, VERSION, SUBVERSION)

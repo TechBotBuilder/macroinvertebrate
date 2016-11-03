@@ -1,4 +1,4 @@
-import pickle
+import dill
 
 #to do dictionary sorting quickly
 import collections
@@ -12,7 +12,7 @@ def compare(version, sortby, num_output, output=False):
     #data like list of
     #(SUBVERSION, {'loss':#, 'val_loss':#, 'acc':#, 'val_acc':#})
     with open("models/{}/results.pickle".format(version), 'rb') as f:
-        results = pickle.load(f)
+        results = dill.load(f)
     if sortby == 'combo':
         val_accs = dict([dp for dp in enumerate([(d[1]['acc']*d[1]['val_acc'])**0.5 for d in results])])
     else:
