@@ -1,3 +1,6 @@
 Week 9 Plan:
-Use the RBM library located last week to train some restricted boltzmann machiens. It is unlikely I will have time to run as many gridsearch options as in the past few weeks; however, there are fewer parameters to vary (the main component is hidden size).
+Use the RBM library located last week to train some restricted boltzmann machines. It is unlikely I will have time to run as many gridsearch options as in the past few weeks; however, there are fewer parameters to vary (the main component is hidden size).
 Reading recent discussions online has hinted that RBMs are a technique of the past, used to initialize weight matrices before there were optimizers and random initialization procedures capable of training deep nets without help. I guess we will see the results soon enough.
+
+Week 9 Report:
+I have a code sample to start with, in 'rbm.py'. I will complete a more detailed report by the end of the semester; right now I will move on to convolutional neural networks.

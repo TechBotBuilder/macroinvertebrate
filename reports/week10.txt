@@ -1,0 +1,2 @@
+Week 10 Plan:
+This begins the convolutional neural network stage. There is code in the 'conv.py' file that seems to be working already, which I based on the "VGG-like convnet" example at https://keras.io/getting-started/sequential-model-guide/#examples. This week I will also write a gridsearch program for the convnet and train a model to ensure the code is correct.
