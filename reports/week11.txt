@@ -1,0 +1,2 @@
+Week 11 Plan:
+Continue training of the activity-regularized network mentioned in week 10's report. Then, gridsearch over models likely to generalize well, and train the most promising model further. To reducing overfitting, I will also try training a model over image data with a wider range of preprocessing transformations (more shifting, shearing, rotating, and zooming) to try to provide 'more' data for the model to train on in the hopes that will reduce overfitting.
