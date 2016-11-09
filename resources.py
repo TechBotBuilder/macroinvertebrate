@@ -14,11 +14,11 @@ def num_classes(DATA_DIRECTORY):
 def image_generators(IMAGE_DIMENSION, BATCH_SIZE, DATA_DIRECTORY):
     from keras.preprocessing.image import ImageDataGenerator
     image_loader = ImageDataGenerator(
-        rotation_range=25,
-        width_shift_range=0.05,
-        height_shift_range=0.05,
+        rotation_range=35,#25,
+        width_shift_range=0.1,#0.05,
+        height_shift_range=0.1,#0.05,
         shear_range=0.05,
-        zoom_range=0.2,
+        zoom_range=0.25,#0.2,
         fill_mode='constant',
         cval=0
         )
@@ -58,7 +58,7 @@ def save_history(history, VERSION, SUBVERSION):
 def save(model, history, VERSION, SUBVERSION):
     save_model(model, VERSION, SUBVERSION)
     save_architecture(model, VERSION)
-    save_history(history, VERSION, SUBVERSION)
+    #save_history(history, VERSION, SUBVERSION)
 
 def load(VERSION, SUBVERSION):
     from keras.models import model_from_json
