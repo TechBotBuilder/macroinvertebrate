@@ -67,5 +67,16 @@ def load(VERSION, SUBVERSION):
     model.load_weights('models/{}/training_sessions/{}/weights.hdf5'.format(VERSION, SUBVERSION))
     return model
 
+def save_gridsearch(VERSION, results):
+    import dill
+    try:
+        with open("models/{}/results.pickle".format(VERSION), 'rb') as f:
+            prev_results = dill.load(f)
+    except:
+        prev_results = []
+    results = prev_results + results
+    with open("models/{}/results.pickle".format(VERSION), 'wb') as f:
+        dill.dump(results, f)
+
 
 
