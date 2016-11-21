@@ -32,17 +32,20 @@ def image_generators(IMAGE_DIMENSION, BATCH_SIZE, DATA_DIRECTORY):
     validation_generator = image_loader.flow_from_directory('{}/validation'.format(DATA_DIRECTORY), **options)
     return training_generator, validation_generator
 
-def save_model(model, VERSION, SUBVERSION):
+def safeify_dir(directory):
+    #help from http://stackoverflow.com/a/273227
     import os
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+def save_model(model, VERSION, SUBVERSION):
     check_directories = (
         'models/{}'.format(VERSION),
         'models/{}/training_sessions'.format(VERSION),
         'models/{}/training_sessions/{}'.format(VERSION, SUBVERSION)
         )
-    #help from http://stackoverflow.com/a/273227
     for checkdir in check_directories:
-        if not os.path.exists(checkdir):
-            os.makedirs(checkdir)
+        safeify_dir(checkdir)
     model.save_weights('models/{}/training_sessions/{}/weights.hdf5'.format(VERSION, SUBVERSION))
 
 def save_architecture(model, VERSION):
@@ -68,6 +71,7 @@ def load(VERSION, SUBVERSION):
     return model
 
 def save_gridsearch(VERSION, results):
+    safeify_dir("models/{}".format(VERSION))
     import dill
     try:
         with open("models/{}/results.pickle".format(VERSION), 'rb') as f:
