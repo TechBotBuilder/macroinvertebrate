@@ -24,11 +24,11 @@ else:
     img_channels = 1
     c_h_size = [32, 64]
     d_h_size = [512]
-    dropout = 0.5
-    k_size = 3
+    dropout = 0
+    k_size = 5
     activation = 'relu'
     pool_dim = 2
-    l2=1e-4
+    l2=0
     
     model = Sequential()
     model.add(Convolution2D(c_h_size[0], k_size, k_size, border_mode='same', 
@@ -37,24 +37,24 @@ else:
     model.add(Convolution2D(c_h_size[0], k_size, k_size, activity_regularizer=activity_l2(l2)))
     model.add(Activation(activation))
     model.add(MaxPooling2D(pool_size=(pool_dim, pool_dim)))
-    model.add(Dropout(dropout))
+    if dropout>0: model.add(Dropout(dropout))
     
     for size in c_h_size[1:]:
         model.add(Convolution2D(size, k_size, k_size, border_mode='same', 
             activation=activation, activity_regularizer=activity_l2(l2)))
         model.add(Convolution2D(size, k_size, k_size, activation=activation, activity_regularizer=activity_l2(l2)))
         model.add(MaxPooling2D(pool_size=(pool_dim, pool_dim)))
-        model.add(Dropout(dropout))
+        if dropout>0: model.add(Dropout(dropout))
     
     model.add(Flatten())
     for size in d_h_size:
         model.add(Dense(size, activation=activation, activity_regularizer=activity_l2(l2)))
-        model.add(Dropout(dropout))
+        if dropout>0: model.add(Dropout(dropout))
     
     model.add(Dense(r.num_classes(data_dir)))
     model.add(Activation('softmax'))
 
-optimizer = SGD(lr=0.01, decay=1e-5, momentum=0.9, nesterov=True)
+optimizer = SGD(lr=0.01, decay=1e-4, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
 training_generator, validation_generator = r.image_generators(img_dim, batch_size, data_dir)
