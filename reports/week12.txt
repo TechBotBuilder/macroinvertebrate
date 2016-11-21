@@ -1,0 +1,3 @@
+Week 12 Plan:
+This week, I will be working with recurrent neural networks for image classification. Specifically, I would like to try a long short-term memory model as a 'highway' network. The highway architecture utilizes the methods developed for recurrent networks to train such extremely deep networks.
+I will write code for training and gridsearching such networks this week.
