@@ -1,2 +1,11 @@
 Week 11 Plan:
 Continue training of the activity-regularized network mentioned in week 10's report. Then, gridsearch over models likely to generalize well, and train the most promising model further. To reducing overfitting, I will also try training a model over image data with a wider range of preprocessing transformations (more shifting, shearing, rotating, and zooming) to try to provide 'more' data for the model to train on in the hopes that will reduce overfitting.
+
+Week 11 Report:
+Here are the top three gridsearched models, trained on the more liberally preprocessed data:
+c[32, 64].d[512].i32.D0.k5.arelu.p2.l0:       acc=0.0917, val_acc=0.124
+c[32, 64].d[512].i32.D0.k5.arelu.p2.l0.001:   acc=0.0932, val_acc=0.115
+c[32, 64].d[512].i32.D0.k3.arelu.p2.l0.001:   acc=0.0876, val_acc=0.115
+Training a model with the top-performing parameters for 100 shots through the data led to a 80.5% training accuracy, but only a 20.4% validation and 23.0% test accuracy.
+The results of training a model with dropout for nearly a thousand epochs were 95.5% training, 23.0% validation and 28.3% test accuracy. The results of training a model with dropout and activation regularization for around 500 epochs were 64.8% training, 25.7% validation, and 23.9% test.
+There is a third type of regularization that I found out about recently, spatial dropout, which drops out entire feature maps (a convolutional layer learns a multitude of kernals applied to each previous layer; the layer generated from a single kernal is a feature map) in a convolutional layer to reduce dependence among them, limiting the ability of the model to overtrain on specific examples. This spatial dropout method is noted in the keras documentation at https://keras.io/layers/core/#spatialdropout2d, and its improvement of performance on small training sets is noted in the 2015 paper "Efficient Object Localization Using Convolutional Networks" at https://arxiv.org/pdf/1411.4280.pdf.
