@@ -1,3 +1,8 @@
 Week 12 Plan:
 This week, I will be working with recurrent neural networks for image classification. Specifically, I would like to try a long short-term memory model as a 'highway' network. The highway architecture utilizes the methods developed for recurrent networks to train such extremely deep networks.
 I will write code for training and gridsearching such networks this week.
+
+Week 12 Report:
+I initially wrote a general highway model training program that created a new highway layer at each layer of the highway, but that was not my intention, so I reviewed the Keras functional API and created a program to train networks with a single weight matrix shared across every layer of the highway part of the model, which is a very close analog to recurrent networks. Unfortunately, neither approach has shown much promise during initial tests.
+I also completed a gridsearch program, for which I had a moment of insight and finally developed an elegant way to write the code that cycles through every possible hyperparameter combination (now it uses modular arithmetic). I blame the infinite series problems I've recently had to do for real analysis 1.
+

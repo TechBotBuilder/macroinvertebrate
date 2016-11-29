@@ -1,0 +1,2 @@
+Week 13 Plan:
+Gridsearch this week and train best results. I might try to train some more of the first type of highway model mentioned in the week 12 report if the gridsearch does not produce good results. I will, however, still train the best models according to gridsearch for 100 epochs.
