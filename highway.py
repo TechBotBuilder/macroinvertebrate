@@ -1,6 +1,5 @@
 #highway neural network trainer
 import resources as r
-from keras.optimizers import SGD
 r.log("MAGIC!")
 
 from sys import argv
@@ -12,17 +11,19 @@ batch_size = 64
 nb_epoch = 50
 samples_per_epoch = 2048
 img_dim = 32
+img_channels = 1
+
+recurrent_size = 5096
+highway_depth = 3
+activation = 'sigmoid'
+optimizer = 'adam'
+
 
 if int(SUBVERSION) > 0:
     model = r.load(VERSION, int(SUBVERSION)-1)
 else:
     from keras.models import Model
     from keras.layers import Input, Flatten, Dense, Highway
-    
-    img_channels = 1
-    recurrent_size = 1024
-    highway_depth = 20
-    activation = 'relu'
     
     in_layer = Input(shape=(1,img_dim,img_dim))
     flatten = Flatten()(in_layer)
@@ -38,7 +39,6 @@ else:
     
     model = Model(in_layer, predicting_layer)
 
-optimizer = 'rmsprop'
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
 training_generator, validation_generator = r.image_generators(img_dim, batch_size, data_dir)
