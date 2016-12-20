@@ -10,10 +10,9 @@ def avg(values):
 
 def smoothed(values, kernal=5):
     newvalues=values[:]
-    oldvalues=values[:]
     for i in range(len(values)):
         surrounding = [i+k for k in range(-kernal+1,kernal) if i+k >=0 and i+k<len(values)]
-        newvalues[i]=avg([oldvalues[pt] for pt in surrounding])
+        newvalues[i]=avg([values[pt] for pt in surrounding])
     return newvalues
 
 assert 4>=len(argv)>=3
@@ -25,7 +24,11 @@ else:
     smoothing=5
 
 with open("models/{}/training_sessions/{}/history.txt".format(version,subversion), "rb") as f:
-    res = pickle.load(f).history
+    res = pickle.load(f)
+
+#check new/old-style history
+if 'history' in res.__dict__:
+    res = res.history
 
 #see http://stackoverflow.com/a/4701285 - help to add legend
 fig = plt.figure()

@@ -61,7 +61,7 @@ def save_history(history, VERSION, SUBVERSION):
 def save(model, history, VERSION, SUBVERSION):
     save_model(model, VERSION, SUBVERSION)
     save_architecture(model, VERSION)
-    #save_history(history, VERSION, SUBVERSION)
+    save_history(history, VERSION, SUBVERSION)
 
 def load(VERSION, SUBVERSION):
     from keras.models import model_from_json
