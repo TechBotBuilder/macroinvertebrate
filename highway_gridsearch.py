@@ -13,6 +13,9 @@ samples_per_epoch = 2048
 img_dim = 32
 img_channels = 1
 
+backup_period = 10 #save every ten models
+START = 140 #our program crashed in model 121 last time.
+
 #can do this outside of model generation since image dimension and batch size are being held constant
 training_generator, validation_generator = r.image_generators(img_dim, batch_size, data_dir)
 nb_validation_samples = validation_generator.N
@@ -67,7 +70,7 @@ for i in range(len(ops)):
     num_models *= len(ops[i])
 results = []
 print("Gridsearching over {} hyperparameter combinations...".format(num_models))
-for model_num in range(num_models):
+for model_num in range(START, num_models):
     combo = [0]*len(ops)
     n = model_num
     i=0
@@ -80,6 +83,9 @@ for model_num in range(num_models):
     subversion = format_str.format(*model_ops)
     result = test_hyperparams(*model_ops)
     results.append((subversion, result))
+    if model_num % backup_period == 1:
+        r.save_gridsearch(VERSION, results)
+        results = []
 
 r.save_gridsearch(VERSION, results)
 
