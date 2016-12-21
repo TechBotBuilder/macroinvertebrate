@@ -14,7 +14,8 @@ img_dim = 32
 img_channels = 1
 
 backup_period = 10 #save every ten models
-START = 140 #our program crashed in model 121 last time.
+START = 0 #If the program crashes, you can see how many datapoints it saved,
+#   then start it back up from that point.
 
 #can do this outside of model generation since image dimension and batch size are being held constant
 training_generator, validation_generator = r.image_generators(img_dim, batch_size, data_dir)
