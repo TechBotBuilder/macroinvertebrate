@@ -1,2 +1,11 @@
 Week 13 Plan:
 Gridsearch this week and train best results. I might try to train some more of the first type of highway model mentioned in the week 12 report if the gridsearch does not produce good results. I will, however, still train the best models according to gridsearch for 100 epochs.
+
+Week 13 Results:
+Gridsearch kept running out of memory, so I added auto-backup every 10 models and a restore point feature to this gridsearch. Best gridsearch results were:
+d3.s5096.asigmoid.oadam:        acc=0.0861, val_acc=0.133
+d13.s5096.asigmoid.osgd:        acc=0.0779, val_acc=0.115
+d13.s1024.asigmoid.ormsprop:    acc=0.0805, val_acc=0.0973
+Training the first model architecture above (recurrent/highway depth of 3 layers, 5096 sigmoidal hidden units per layer, ADAM optimizer) for 100 epochs resulted in lower accuracies than those in the initial, 3-epoch training results above. The 100-epoch training accuracy was 7.23%, and validation and test accuracies were 7.08%. Each of the losses (cross-entropy measure, as used in all tests) for the 100-epoch model was greater than 14.9, which is very high in comparison to the other architectures.
+The fact that the network is somewhat recurrent points to 'overshooting' as a possible cause, so I turned down the learning rate parameter of the ADAM algorithm from 1e-3 (default) to 1e-5. This resulted in a model with much lower loss (5.48) and slightly better training accuracy (7.95%) after 20 epochs. Using SGD with momentum resulted in yet better results after 20 epochs - 4.36 loss and 8.20% training accuracy.
+In summary, it appears that the highway/recurrent architecture does not perform well on this classification task, underperforming the SVM-like architecture I started with.
