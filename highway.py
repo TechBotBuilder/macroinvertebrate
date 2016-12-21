@@ -8,7 +8,7 @@ VERSION, SUBVERSION = argv[1:]
 
 data_dir = 'dog_data'
 batch_size = 64
-nb_epoch = 50
+nb_epoch = 500
 samples_per_epoch = 2048
 img_dim = 32
 img_channels = 1
@@ -16,7 +16,8 @@ img_channels = 1
 recurrent_size = 5096
 highway_depth = 3
 activation = 'sigmoid'
-optimizer = 'adam'
+#optimizer = 'adam'
+from keras.optimizers import SGD
 
 
 if int(SUBVERSION) > 0:
@@ -39,7 +40,7 @@ else:
     
     model = Model(in_layer, predicting_layer)
 
-model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=1e-3, momentum=0.8, decay=0.005), metrics=['accuracy'])
 
 training_generator, validation_generator = r.image_generators(img_dim, batch_size, data_dir)
 nb_validation_samples = validation_generator.N
@@ -55,7 +56,7 @@ history = model.fit_generator(
     verbose=1)
 
 r.log("Training done. Saving everything...")
-r.save(model, history, VERSION, SUBVERSION)
+r.save(model, history.history, VERSION, SUBVERSION)
 
 r.log("Done.")
 
