@@ -34,4 +34,4 @@ options = {
     }
 test_generator = image_loader.flow_from_directory('{}/{}'.format(DATA_DIRECTORY, drawfrom), **options)
 accuracies = model.evaluate_generator(test_generator, val_samples=test_generator.N)
-print("Test accuracy: {}\tTest loss: {}".format(round(accuracies[1],4), round(accuracies[0],4)))
+print("{} accuracy: {}\t loss: {}".format(drawfrom.title(), round(accuracies[1],4), round(accuracies[0],4)))
