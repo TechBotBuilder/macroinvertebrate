@@ -1,3 +1,10 @@
+Abstract:
+This is a comparison of different artificial neural network architectures' performances on a small dataset of images of 21 classes of macroinvertebrates. The best model will be used in an application to identify macroinvertebrates in the field. This also serves as practical experience with neural networks for me.
+Four different network architectures were used: SVM-like, where the inputs map to a layer of nonlinear units through a static weight matrix, which then is mapped to class probabilities (a softmax layer) through a learnable weight matrix; simple feedforward, where the input is mapped to class probabilities by progressing through several nonlinear hidden layers and learnable weight matrices; convolutional, where each layer is expanded into several feature maps by small, shared weight matrices (learnable kernals), and then the next layer is produced with pooling; and recurrent/highway, where the input feeds into a layer that feeds into itself for a predetermined number of steps until it feeds to an output, creating a deep network with only three weight matrices.
+Brief results:
+The convolutional architecture performed best of the four.
+
+Notes:
 I noticed some interesting results in gridsearch.
 Looking at highway gridsearch, the distribution of optimizers along the loss axis seems more or less random - eg, sorting the 151 gridsearched results by training loss from least loss to greatest,
 among the 75 models with least loss, 25 are SGD, 25 are adam, and 25 are rmsprop, while
@@ -19,10 +26,10 @@ Similar analyses on different variables for the highway model revealed a correla
  - Moderately strong outperformance of sigmoid over relu:
    - sigmoid: 53 / 24
    -    relu: 22 / 51
- - Optimizers about equal performance (one more time):
-   -     sgd: 25 / 24
-   -    adam: 25 / 26
-   - rmsprop: 25 / 25
+ - Optimizers about equal performance (as above):
+   -     SGD: 25 / 24
+   -    Adam: 25 / 26
+   - RMSprop: 25 / 25
 
 Similarly, in the convolutional gridsearch:
  - strongly show relu outperformed sigmoid
@@ -35,15 +42,13 @@ Similarly, in the convolutional gridsearch:
    -  0.0: 15 /  8
    -  0.5: 12 / 12
    - 0.75:  9 / 15
- - no difference from kernal size:
+ - no difference for kernal size:
    - 3: 18 / 18
    - 5: 18 / 17
  - L2 loss also initially reduces performance:
    -    0: 14 /  9
    - 1e-5: 13 / 11
    - 1e-3:  9 / 15
-
-Following are similar inspections of the other model architectures.
 
 Dense feedforward gridsearch:
  There were two loss functions tested, mean and categorical crossentropy, which cannot be compared directly, so are listed separately here:
@@ -82,7 +87,7 @@ Categorical crossentropy loss:
    -     SGD: 114 / 74
    -  Adamax:  22 / 26
    - RMSprop:  31 / 67
- - Hidden sizes:
+ - Hidden sizes - 32 over 256 over 2048:
    -   32: 89 / 23
    -  256: 60 / 52
    - 2048: 18 / 92
@@ -170,14 +175,17 @@ Categorical crossentropy loss:
    - 2^-4:  8 / 16
    - 2^-8: 20 /  4
 
+The above data mostly follows the expected patterns - techniques like dropout and weight regularization that are meant to reduce overfitting reduce initial performance, and the best learning rates, activations, and optimizers vary, while smaller minibatches are mostly preferred for batch size.
+However, it seems that smaller image sizes are slightly preferred, which does not intuitively make sense. Also, it seems that cross-entropy loss models do better with smaller hidden sizes, which does not make much sense either, and yet mean-squared-error loss models indeed do better with bigger hidden sizes. It is probable that larger models and image sizes have better performance after more thorough training, and that this is a result of the second problem below.
 
+Issues:
 There were several problems with the investigation.
 The lack of seeding the random number generators for weight initialization was a fault, since the performance of a certain hyperparameter combination could not be exactly reproduced.
 Nor were the comparisons among hyperparameter combinations after only three epochs of training very 'fair,' since little can be told about the eventual accuracy of a model with such a small amount of training due to 'plateus' of little improvement leading up to large gains and the effect of noisiness that minibatch updates have on model convergence. With the hardware available, however, a more lengthy gridsearch would have been infeasible.
 Another problem was that, after the first few convolutional models were tried, the code refused to save any more training histories - data which helps in hand-tuning hyperparameters, a process described in Stanford's convnet course notes (http://cs231n.github.io/neural-networks-3/#baby). As a result of this, sensible hyperparameter patches to do gridsearch over were rather blindly chosen.
 These problems might be fixed in the following ways:
 The first, trivially, by adding seeding code to the gridsearch and training program.
-The last two, by a bayesian method, essentially using machine learning to predict which hyperparameter combination might work best and which areas of hyperparameter space should be explored.
+The last two, by a Bayesian method, essentially using machine learning to predict which hyperparameter combination might work best and which areas of hyperparameter space should be explored ti get more data. However, nothing would change the fact that more epochs of training than the three performed are needed to get very informative results from each model.
 
 Result Summary:
 What follows are the best models (by test accuracy) from each architecture, each trained for at least 100 epochs over the data.
@@ -188,9 +196,9 @@ Conv: Training 80.5%,  validation 20.4%,  test 23.0% (100 epochs)
       Training 95.5%,  validation 23.0%,  test 28.3% (1000 epochs)
 RNN:  Training  7.23%, validation  7.08%, test  7.08% (100 epochs)
       Training 16.1%,  validation  9.73%, test 16.4% (1500 epochs)
+In short, the best models trained for the convolutional architecture and the deep feedforward architecture achieved performances of approximately 28% and 20% test accuracy respectively, and both experienced severe overfitting.
+Further training with careful experimentation and tuning of parameters could improve the performance of the SVM-like or highway-like architectures, but the time investment would be inhibitive.
+The next steps will be to tune the convolutional and feedforward architectures and to train them for a long period (up to a week), starting with testing a convolutional model with depth greater than two convolutional layers and using spatial dropout to reduce overfitting. The results of the thorough analysis of gridsearch listed above should be of help in finetuning hyperparameters.
+Once it is trained, the best model can then be used in a mobile phone application to give suggestions to novices about the species of a macroinvertebrate, although they might be only 25% helpful. It might be that adding a feature to the app to match the images taken with a similar-looking example picture and uploading the 32x32 grayscale images to a single source would drive the creation of a much larger dataset, which would discourage overfitting and thus increase test accuracy. Another feature of the app should be to download new network weights as they become available.
+Other aspects to try are not using a difference-of-gaussian filter and using colored inputs instead of grayscale.
 
-In short, the best models trained for the convolutional architecture and the deep feedforward architecture both achieved similar performance of approximately 25% test accuracy, and both experienced severe overfitting. The convolutional network could have been improved with increased depth.
-Further training with careful experimentation and tuning of parameters could also improve the performance of the SVM-like or highway-like architectures, but the time investment would be inhibitive.
-The next steps will be to tune the convolutional and feedforward architectures and to train them for a long period (possibly a week), starting with testing a convolutional model with depth greater than two. The results of the thorough analysis of gridsearch listed above should be of help in finetuning hyperparameters. Once it is trained, the best model can then be used in a mobile phone application to give suggestions to novices about the species of a macroinvertebrate.
-Another aspect to try might be using raw images instead of those with a difference-of-gaussian filter, or using colored inputs instead of grayscale.
-As mentioned in weekly reports, using spatial dropout in the convolutional models may reduce overfitting.
