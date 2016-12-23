@@ -108,7 +108,67 @@ Categorical crossentropy loss:
    - 2^-3: 18 / 31
    - 2^-6: 31 / 18
 
-Support-vector-machine(-like) models, which also gridsearched over categorical crossentropy and mean squared error:
+Support-vector-machine(-like) models, which also gridsearched over categorical crossentropy and mean squared error. (I wrote 'svm_analysis.py' to demonstrate how I am getting this data; the others I analyzed in a Python REPL session.)
+Mean squared error loss:
+ - Optimizers - Adamax over SGD way over RMSprop:
+   -     SGD: 136 / 80
+   -  Adamax:  16 /  8
+   - RMSprop:   4 / 68
+ - Hidden sizes - 4096 over 1024 over 256:
+   -  256: 44 / 60
+   - 1024: 53 / 51
+   - 4096: 59 / 45
+ - Batch sizes - No preference:
+   -  64: 78 / 78
+   - 256: 78 / 78
+ - Image sizes - 16x16 over 32x32:
+   - 16x16: 92 / 64
+   - 32x32: 64 / 92
+ - Activations - sigmoid very much over relu:
+   - sigmoid: 124 /  32
+   -    relu:  32 / 124
+ - Momentum (SGD only) - No preference:
+   -  0.9: 36 / 36
+   -  0.5: 36 / 36
+   - None: 36 / 36
+ - Learning rate (SGD only) - No preference:
+   - 2^-1: 36 / 36
+   - 2^-4: 36 / 36
+   - 2^-8: 36 / 36
+ - Learning rate (RMSprop only) - 1/256 over 1/2 over 1/16:
+   - 2^-1: 10 / 14
+   - 2^-4:  9 / 15
+   - 2^-8: 17 /  7
+Categorical crossentropy loss:
+ - Optimizers - Adamax very much prefered over SGD over RMSprop:
+   -     SGD: 117 / 99
+   -  Adamax:  24 / 0
+   - RMSprop:  15 / 57
+ - Hidden sizes - 256 over 1024 over 4096:
+   -  256: 70 / 34
+   - 1024: 51 / 53
+   - 4096: 35 / 69
+ - Batch sizes - 256 over 64:
+   -  64: 74 / 82
+   - 256: 82 / 74
+ - Image sizes - 16x16 just over 32x32:
+   - 16x16: 80 / 76
+   - 32x32: 76 / 80
+ - Activations - sigmoid over relu:
+   - sigmoid: 94 / 62
+   -    relu: 62 / 94
+ - Momentum (SGD only) - None over 0.5 over 0.9:
+   -  0.9: 32 / 40
+   -  0.5: 37 / 35
+   - None: 39 / 33
+ - Learning rate (SGD only) - 1/256 strongly over 1/16 over 1/2:
+   - 2^-1: 10 / 62
+   - 2^-4: 28 / 44
+   - 2^-8: 70 /  2
+ - Learning rate (RMSprop only) - 1/256 strongly over 1/16 same as 1/2:
+   - 2^-1:  8 / 16
+   - 2^-4:  8 / 16
+   - 2^-8: 20 /  4
 
 
 There were several problems with the investigation.
