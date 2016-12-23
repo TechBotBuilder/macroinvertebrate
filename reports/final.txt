@@ -3,7 +3,7 @@ Looking at highway gridsearch, the distribution of optimizers along the loss axi
 among the 75 models with least loss, 25 are SGD, 25 are adam, and 25 are rmsprop, while
 among the 76 models with greatest loss, 24 are SGD, 27 are adam, and 25 are rmsprop.
 The lack of clustering probably demonstrates the similarity of the optimizers before they have had time to 'build up momentum' (or each optimizer's equivalent) in the 3 epochs each model was trained for, or the randomness associated with not seeding the model's weight initializers.
-Similar cluster analyses on different variables for the highway model revealed a correlation between:
+Similar analyses on different variables for the highway model revealed a correlation between:
  - deeper networks and lower loss (Depth: # in lower half of loss / # in upper half of loss)
    - 20: 18 / 11
    - 13: 19 / 11
@@ -43,7 +43,7 @@ Similarly, in the convolutional gridsearch:
    - 1e-5: 13 / 11
    - 1e-3:  9 / 15
 
-We're on a roll, so why not inspect the other model architectures too?
+Following are similar inspections of the other model architectures.
 
 Dense feedforward gridsearch:
  There were two loss functions tested, mean and categorical crossentropy, which cannot be compared directly, so are listed separately here:
@@ -173,9 +173,24 @@ Categorical crossentropy loss:
 
 There were several problems with the investigation.
 The lack of seeding the random number generators for weight initialization was a fault, since the performance of a certain hyperparameter combination could not be exactly reproduced.
-Nor were the comparisons among hyperparameter combinations after only three epochs of training very 'fair,' since little can be told about the eventual accuracy of a model from its first (approximately) 100 updates due to 'plateus' of little improvement leading up to large gains and the effect of noisiness that minibatch updates have on model convergence. With the hardware available, however, a more lengthy gridsearch would have been infeasible.
-Another problem was that, after the first few convolutional models were tried, the code refused to save any more training histories - data which helps in hand-tuning hyperparameters, a process described in Stanford's convnet course notes (http://cs231n.github.io/neural-networks-3/#baby). As a result of this, sensible hyperparameter patches to do gridsearch over were rather blindly chosen. For example, after gridsearching for the highway architecture,  
+Nor were the comparisons among hyperparameter combinations after only three epochs of training very 'fair,' since little can be told about the eventual accuracy of a model with such a small amount of training due to 'plateus' of little improvement leading up to large gains and the effect of noisiness that minibatch updates have on model convergence. With the hardware available, however, a more lengthy gridsearch would have been infeasible.
+Another problem was that, after the first few convolutional models were tried, the code refused to save any more training histories - data which helps in hand-tuning hyperparameters, a process described in Stanford's convnet course notes (http://cs231n.github.io/neural-networks-3/#baby). As a result of this, sensible hyperparameter patches to do gridsearch over were rather blindly chosen.
+These problems might be fixed in the following ways:
+The first, trivially, by adding seeding code to the gridsearch and training program.
+The last two, by a bayesian method, essentially using machine learning to predict which hyperparameter combination might work best and which areas of hyperparameter space should be explored.
+
+Result Summary:
+What follows are the best models (by test accuracy) from each architecture, each trained for at least 100 epochs over the data.
+SVM:  Training 10.4%,  validation  8.85%, test 11.9% (100 epochs)
+FF:   Training 11.3%,  validation 10.6%,  test 13.7% (100 epochs)
+      Training 98.5%,  validation 24.8%,  test 19.9% (3000 epochs)
+Conv: Training 80.5%,  validation 20.4%,  test 23.0% (100 epochs)
+      Training 95.5%,  validation 23.0%,  test 28.3% (1000 epochs)
+RNN:  Training  7.23%, validation  7.08%, test  7.08% (100 epochs)
+      Training 16.1%,  validation  9.73%, test 16.4% (1500 epochs)
 
 In short, the best models trained for the convolutional architecture and the deep feedforward architecture both achieved similar performance of approximately 25% test accuracy, and both experienced severe overfitting. The convolutional network could have been improved with increased depth.
 Further training with careful experimentation and tuning of parameters could also improve the performance of the SVM-like or highway-like architectures, but the time investment would be inhibitive.
-The next steps will be to tune the convolutional and feedforward architectures and to train them for a long period (possibly a week), starting with testing a convolutional model with depth greater than two. The results of the thorough analysis of gridsearch listed above should be of help in finetuning hyperparameters. The best model can then be used in a mobile phone application to give suggestions to novices about what species a macroinvertebrate is.
+The next steps will be to tune the convolutional and feedforward architectures and to train them for a long period (possibly a week), starting with testing a convolutional model with depth greater than two. The results of the thorough analysis of gridsearch listed above should be of help in finetuning hyperparameters. Once it is trained, the best model can then be used in a mobile phone application to give suggestions to novices about the species of a macroinvertebrate.
+Another aspect to try might be using raw images instead of those with a difference-of-gaussian filter, or using colored inputs instead of grayscale.
+As mentioned in weekly reports, using spatial dropout in the convolutional models may reduce overfitting.
