@@ -1,0 +1,21 @@
+Note: I will be developing for Android.
+
+Plan for GUI:
+My plan is to keep the app simple to start off - just keep to classifying. On the top of the main screen, there should be a view of the current camera feed. The user should tap the feed or a button to take a picture. Then the network should automatically run on said picture. On the bottom half of screen, the app should show the picture that was just taken and the top five guesses with percent likelihood for each. It will be easiest to keep the GUI to portrait-layout only.
+In the final ten weeks of this project, other features should be added. To initially publish the app, the model does not need to be very accurate, since the dataset size will increase as the app is used. As better models are produced from more data, the users can update their local models. To do this, first, the app should let the user tap on which classification the picture actually is and upload the picture to a cloud dataset or save it for later when the user is connected to internet and can upload. Second, I will need to implement a settings page that checks for network architecture or weight updates and lets the user choose to update their local version. I also plan to add example pictures next to the names of the top five most likely classifications (for the user to reference when using the manual classification feature).
+
+Plan for implementing network:
+Keep an architecture file. The first line should be the version number of the network in use. The following lines should be a list of layer names (for weight files), sizes, and activations. (So the user does not need to update the entire app to update the architecture and weights.)
+For each layer, there should be a file '{layer_name}.weights' with the matrix in csv or binary format, using 16- or 32-bit floats.
+To run an image through the network, it will need to be resized, run through a difference-of-gaussian filter, flattened into an array, and multiplied with the first matrix. Then the first biases will be added to the result, which will be run through the first layer's nonlinearity, to produce the input to the second layer, and so on, until the final layer output is reached.
+The final outputs of the network are the result of a softmax activation layer, so each represents a probability that the image falls under the class corresponding to that output. Converting the probabilities to classes will entail associating each probability with the class and then sorting based on the probabilities.
+Depending on the size of the network, it might be desirable to multiply the input to each layer with that layer's matrix row-by-row (so only one line of a single weight file needs to be kept in memory at any one time, instead of loading in one layer's entire weights at once or keeping all the layers' weights in memory while the app is running). However, this one-line-at-a-time method might be slower and more battery-intensive than simply keeping all the weights in memory. I will have to test to see which works better, if loading entire layers at once is feasible.
+I will also either use a matrix or neural network library for Java, or implement my own. Since no network training will occur on the user's device, the matrix part of the library only needs to be able to multiply and add matrices, which can be coded simply in Java (if perhaps inefficiently). The network part should keep track of the current layer state and be able to sort the results, returning the top five classifications and their respective probabilities of being the true macroinvertebrate species.
+
+Plan for the next four weeks:
+My goal for the first five weeks is to create a basic UI and embed the network weights/architecture in a usable format. To do this, I need to:
+Week 2: Install Android Studio and run a 'Hello World' app from the example code on my phone.
+Week 3: Write network interface - read architecture, read model weights, etc. Include a matrix library to do the hard work.
+Week 4: Begin basic GUI. By end of week, have a blank screen to work with.
+Week 5: Finish basic GUI. By end of week, have an area for camera input and an area for classification output.
+
