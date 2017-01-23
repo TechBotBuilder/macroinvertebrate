@@ -1,0 +1,4 @@
+Week 2 Report:
+Android Studio is currently runnable and can build and execute an application on my phone in debugging mode.
+Difficulties encountered included permissions problems on Linux so that android studio could not write to my phone file system, lack of drivers on Windows, and problems with not being able to run virtual devices on either. I was able to overcome the permissions problems on Linux (however, only unsafely - I am running Android Studio as root).
+All the same, I am on track with the schedule and can begin working through the Android developer example app as well as write a network interface in the coming week.
