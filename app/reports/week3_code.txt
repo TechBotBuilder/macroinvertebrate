@@ -1,0 +1,13 @@
+Week 3 Report:
+In the application, currently I have written the following functionality:
+ - Press a button to open the camera app and get images with the camera
+ - Display the image and a text box that could contain its classification
+ - Resize image with correct centering
+ - Convert image to grayscale values that can be used for network input
+ - Perform difference of gaussian image preprocessing (takes about 5 seconds)
+ - Load in layer configurations
+ - Load in class names (to map the network index output to a name of a macroinvertebrate)
+Essentially, I followed some of my original week 3 plan, but also completed most of the work of weeks 4 and 5.
+I am close to allowing the app to load in network matrices row-by-row while processing an image (row-by-row to save on memory).
+To complete this task I am in the process of writing code to store 32-bit floats from the network files to 16-bit floats and to restore the 32-bit representation from the 16-bit encoding. This is a space-saving tactic that will reduce the expected file size of each layer's matrix from 4 megabytes to 2 megabytes.
+I will finish the 16-32 bit code and continue to test the app for the coming week. Week 4 and 5 will be used to fix all the bugs from the neural network side of the app.
