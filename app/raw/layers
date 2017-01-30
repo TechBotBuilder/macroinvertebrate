@@ -1,0 +1,5 @@
+layer1,sigmoid,1024,1024
+layer2,sigmoid,1024,1024
+layer3,sigmoid,1024,1024
+layer4,sigmoid,1024,1024
+layer5,softmax,1024,21

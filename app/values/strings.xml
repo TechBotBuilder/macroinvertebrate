@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Macroinvertebrate Classifier</string>
+    <string name="take_image_button">Take image</string>
+
+</resources>
