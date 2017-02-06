@@ -1,0 +1,23 @@
+Week 4 Report:
+This week I began attempting to store 32-bit floats lossily into 16-bit floats. However, the conventions for Java float representations was quite confusing, so I instead started working on storing scaled up and rounded values that could then be divided down to approximate their original values. The following is my internal monologue on how I will do this.
+
+In python, I can load a model as I normally would, then use `weights=model.get_weights()` to get numerical values I can work with.
+Then `weights` has (2*number_of_layers) entries, since there are two entries in weights per layer, or rather,
+weights[2k] and weights[2k+1] correspond to the weights and biases for layer k, and are in the form:
+  - weights[2k] : layer k weights : shaped like (layerinsize, layeroutsize),
+  - weights[2k+1] : layer k biases : shaped like (layeroutsize,).
+Each of these are numpy arrays of numpy.float32 numbers.
+A large layer takes up about 4 megabytes of data in this format, but I can preserve most of the information and bring that to 2 megabytes by converting to 16-bit representations. To do this, I need some information:
+The max/min values represented in a model I tested are 8.66 and -7.03, so I can assume all weight/bias values will be in the range from -16 to 16, and during further training I can use weight regulizers and constraints to encourage and enforce these limits.
+Using 16 bits, I can represent integer values from 0 to 65535 (16 bits is a short in Java).
+Let v be an original float32 value. Then our short value y will be (Python code)
+  y = int((16 + v) * (65535/(16*2))) = int( (16+v)*2048 ).
+For care, in case |weight|>=16, we should the have our final value z to store in the file as
+  z = min(65535, max(0, y)).
+Then we just need to write the shorts from our matrix to the weight files in the format we want:
+ For each layer, have 1 file ("layer#") with #output rows, each containing (#input + 1) shorts, the +1 for the bias terms.
+(Rows will not be actually separated because why would we need that for binary? I may find a reason to do this, such as using a 0x0000 value at the end of each row so the network can verify the integrity of the data values. However, since I do not expect users to be changing the raw data nor the network configuration, for now I will not have row separators in the data files and one row will silently run into the next.)
+
+Since 16 bits is a short in Java, I can open a layer file in the code as a binary data stream, then read short values in one at a time, so that to get one element of the vector resulting from this layer's action, I would multiply the input array elementwise as I read in a row of values, add the bias value at the end of the row, and finally feed that through the layer activation, and continue to the next row of values + bias to obtain the next element of the resultant vector.
+
+As I have broken the problem down into attainable steps, I will use week 5 to implement my solution and test the app.
