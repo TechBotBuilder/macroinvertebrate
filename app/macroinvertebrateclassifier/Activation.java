@@ -17,14 +17,21 @@ class Activation {
                 nonlinearity = new Softmax();
                 break;
             case "sigmoid":
-            default:
                 nonlinearity = new Sigmoid();
+                break;
+            case "linear":
+            default:
+                nonlinearity = new Linear();
                 break;
         }
     }
 
     public float[] run(float[] data){
         return nonlinearity.activation(data);
+    }
+
+    private static class Linear extends Nonlinearity{
+        public float activation(float data){ return data; }
     }
 
     private static class Sigmoid extends Nonlinearity{

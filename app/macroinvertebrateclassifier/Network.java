@@ -1,5 +1,6 @@
 package com.techbotbuilder.macroinvertebrateclassifier;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 
@@ -18,8 +19,8 @@ public class Network {
     private static final String categoriesFile = "categories";
     private String[] categories;
 
-    public Network() throws IOException {
-        loadLayers();
+    public Network(Context context) throws IOException {
+        loadLayers(context);
         loadCategories();
     }
 
@@ -37,13 +38,13 @@ public class Network {
         categoriesInfo.close();
     }
 
-    public void loadLayers() throws IOException {
+    public void loadLayers(Context context) throws IOException {
         /*Layer descriptors should be in order from input to output*/
         BufferedReader layersInfo = new BufferedReader(
                 new InputStreamReader(Resources.getSystem().openRawResource(R.raw.layers)));
         ArrayList<Layer> layers = new ArrayList<Layer>();
         String line;
-        while ((line = layersInfo.readLine()) != null) layers.add(new Layer(line));
+        while ((line = layersInfo.readLine()) != null) layers.add(new Layer(line, context));
         this.layers = new Layer[layers.size()];
         layers.toArray(this.layers);
         layersInfo.close();
