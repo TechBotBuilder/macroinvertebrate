@@ -25,16 +25,18 @@ import os
 if not os.path.exists(SAVE_PATH+"/layers"):
     os.makedirs(SAVE_PATH+"/layers")
 
+#weights[2k] : layer k weights : shaped like (layerinsize, layeroutsize)
+#weights[2k+1] : layer k biases : shaped like (layeroutsize,)
 for layernum in range(len(weights)//2):
     layerweight = weights[2*layernum]
     layerbias = weights[2*layernum+1]
     with open(SAVE_PATH+"/layers/layer{}".format(layernum+1), "wb") as f:
-        numrows = len(layerbias)
-        numcols = len(layerweight[0])
-        for rownum in range(numrows):
-            for colnum in range(numcols):
-                f.write(toShort(layerweight[rownum][colnum]))
-            f.write(toShort(layerbias[rownum]))
+        layer_in_size = len(layerweight)
+        layer_out_size = len(layerbias)
+        for output_rownum in range(layer_out_size):
+            for output_colnum in range(layer_in_size):
+                f.write(toShort(layerweight[output_colnum][output_rownum]))
+            f.write(toShort(layerbias[output_rownum]))
 
 print("Layers have been written to {}/layers".format(SAVE_PATH))
 
