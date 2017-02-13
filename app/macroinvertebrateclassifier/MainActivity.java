@@ -29,17 +29,7 @@ public class MainActivity extends AppCompatActivity {
         resultView = (TextView) findViewById(R.id.classification_result);
         goButton  = (Button) findViewById(R.id.take_image_button);
         if (displayImage != null) imagePreview.setImageBitmap(displayImage);
-        displayMessage("Got to pt 0");
         if (network == null) loadNetwork();
-        displayMessage("Got to pt 1");
-        try {
-            Layer steve = new Layer("layer0,linear,1,1", this);
-            float[][] datas = {{0}, {1}, {-1}};
-            displayMessage(String.format("1:%f, 2:%f, -1:%f",
-                    steve.operate(datas[0])[0],steve.operate(datas[1])[0],steve.operate(datas[2])[0]));
-        } catch (Exception e) {
-            displayMessage(Log.getStackTraceString(e));
-        }
     }
 
     private void loadNetwork(){
@@ -47,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             network = new Network(this);
             message = "Files loaded normally.";
-        }catch (Exception e){
-        //} catch (IOException exception){
-            message = "Files failed to load! AAaaaahhhhh!??!!";
-            //goButton.setEnabled(false);
+            goButton.setEnabled(true);
+        } catch (Exception exception){
+            message = getNiceErrorMessage(exception);
+            goButton.setEnabled(false);
         }
         displayMessage(message);
     }
@@ -70,9 +60,8 @@ public class MainActivity extends AppCompatActivity {
             String results;
             try {
                 results = network.identify(displayImage);
-                //} catch (IOException exception) {
-            }catch (Exception e){
-                results = "Failed to load files needed to classify image";
+            } catch (Exception e) {
+                results = getNiceErrorMessage(e);
             }
             displayMessage(results);
         }
@@ -80,5 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     protected void displayMessage(String message){
         resultView.setText(message);
+    }
+    private String getNiceErrorMessage(Exception e){
+        String emessage = Log.getStackTraceString(e);
+        emessage = emessage.length() > 250 ? emessage.substring(0,250) : emessage;
+        return "Something went terribly wrong!\n\n" + emessage;
     }
 }
