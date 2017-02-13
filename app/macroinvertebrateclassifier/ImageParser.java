@@ -15,7 +15,7 @@ public class ImageParser {
 
     public static float[] parseBitmap(Bitmap image){
         /*Make an image usable as input to a neural network
-         * Return IMAGE_DIMENSION**2-length array of values in [8,1]
+         * Return IMAGE_DIMENSION**2-length array of values in [0,1]
          * that can be fed to the neural network.
          */
         Bitmap resultingImage = asGrayscale(differenceOfGaussians(
@@ -24,7 +24,7 @@ public class ImageParser {
         resultingImage.getPixels(pixels, 0, IMAGE_DIMENSION, 0, 0, IMAGE_DIMENSION, IMAGE_DIMENSION);
         //now want results each in [0,1] range
         float[] results = new float[pixels.length];
-        for (int i=0; i<pixels.length; i++) results[i] = (float) pixels[i] / 255;
+        for (int i=0; i<pixels.length; i++) results[i] = (float) pixels[i] / 255f;
         return results;
     }
 

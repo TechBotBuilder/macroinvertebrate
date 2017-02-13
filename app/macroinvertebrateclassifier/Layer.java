@@ -49,10 +49,10 @@ public class Layer {
         for (int matrixRow=0; matrixRow<outSize; matrixRow++){
             for (int matrixColumn = 0; matrixColumn < data.length; matrixColumn++){
                 float matrixElem = shortToFloat(shortStream.readShort());
-                result[matrixRow] += matrixElem * data[matrixColumn];
+                result[matrixRow] = result[matrixRow] + matrixElem * data[matrixColumn];
             }
             float biasElem = shortToFloat(shortStream.readShort());
-            result[matrixRow] += biasElem;
+            result[matrixRow] = result[matrixRow] + biasElem;
         }
         return activation.run(result);
     }
@@ -69,7 +69,7 @@ public class Layer {
     }
     private static float shortToFloat(short value){
         /*Convert our short representation of a float back to a float */
-        float result = (float)value / 2048;
+        float result = (float)value / 2048f;
         return result;
     }
 }
