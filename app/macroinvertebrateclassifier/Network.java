@@ -50,11 +50,16 @@ public class Network {
     }
 
     public String identify(Bitmap image) throws IOException {
-        /*TODO: Return likelihood of top 5 classes*/
         float[] currentData = parseImage(image);
         for (Layer layer: layers) currentData = layer.operate(currentData);
         int[] bestGuesses = sortedIndices(currentData);
-        return categories[bestGuesses[0]];
+        String result="";
+        String formatter="%2.2f: %s\n";
+        for(int i=0; i < 5; i++){
+            int guessindex = bestGuesses[i];
+            result += String.format(formatter, currentData[guessindex], categories[guessindex]);
+        }
+        return result;
     }
 
     private static float[] parseImage(Bitmap image) {
