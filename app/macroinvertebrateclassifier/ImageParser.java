@@ -24,7 +24,7 @@ public class ImageParser {
         resultingImage.getPixels(pixels, 0, IMAGE_DIMENSION, 0, 0, IMAGE_DIMENSION, IMAGE_DIMENSION);
         //now want results each in [0,1] range
         float[] results = new float[pixels.length];
-        for (int i=0; i<pixels.length; i++) results[i] = (float) pixels[i] / 255f;
+        for (int i=0; i<pixels.length; i++) results[i] = (float) Color.blue(pixels[i]) / 255f;
         return results;
     }
 
@@ -74,7 +74,7 @@ public class ImageParser {
             for (int col = 0; col < width; col++) {
                 int pix = original.getPixel(col, row);
                 int newpix = (Color.red(pix)*299 + Color.green(pix)*587 + Color.blue(pix)*114)/1000;
-                grayscale.setPixel(col, row, newpix);
+                grayscale.setPixel(col, row, Color.rgb(0, 0, newpix));
             }
         }
         return grayscale;
