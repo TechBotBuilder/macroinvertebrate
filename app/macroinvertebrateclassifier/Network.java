@@ -51,15 +51,13 @@ public class Network {
 
     public String identify(Bitmap image) throws IOException {
         float[] currentData = parseImage(image);
-        ////for (Layer layer: layers) currentData = layer.operate(currentData);
-        ////int[] bestGuesses = sortedIndices(currentData);
+        for (Layer layer: layers) currentData = layer.operate(currentData);
+        int[] bestGuesses = sortedIndices(currentData);
         String result="";
-        String formatter="%2.2f  ";//: %s\n";
-        ////for(int i=0; i < 5; i++){
-        for(int i=0; i < 50; i++){
-            ////int guessindex = bestGuesses[i];
-            ////result += String.format(formatter, currentData[guessindex], categories[guessindex]);
-            result += String.format(formatter,currentData[i]);
+        String formatter="%2.2f: %s\n";
+        for(int i=0; i < 5; i++){
+            int guessindex = bestGuesses[i];
+            result += String.format(formatter, currentData[guessindex], categories[guessindex]);
         }
         return result;
 
