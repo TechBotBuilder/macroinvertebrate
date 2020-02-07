@@ -1,7 +1,11 @@
+<!DOCTYPE resources [
+    <!ENTITY privacyurl "https://techbotbuilder.github.io/macroinvertebrate/privacy">
+    ]>
+
 <resources>
     <string name="app_name">Macroinvertebrate Classifier</string>
-    <string name="app_version">0.0.1-alpha</string>
-    <string name="title_version">Alpha</string>
+    <string name="app_version">0.0.1-beta</string>
+    <string name="title_version">Beta</string>
     <string name="url_faq">https://techbotbuilder.github.io/macroinvertebrate/faq</string>
     <string name="preference_file_key">com.techbotbuilder.streamteamohio.PREFERENCE_FILE_KEY</string>
     <string name="icon_description">Silhouette of a stonefly in a circle</string>
@@ -101,4 +105,25 @@ Water penny beetle\n
 
     <!-- Messages Preferences -->
     <string name="models_title">Default model</string>
+
+    <!-- privacy -->
+    <string name="privacy_required">Accept privacy to continue using app!</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="privacy_url">&privacyurl;</string>
+    <string name="privacy_intro">If you do not agree to the privacy policy, do not continue to use the app.\n
+        \nThe Privacy Policy can be viewed at \n &privacyurl;
+    \n(This link can be accessed later from the (About) menu.</string>
+    <string name="privacy_open">(Click here to open Privacy Policy in browser)</string>
+    <string name="privacy_basic">The app requests the following permissions as needed:\n
+          - Camera - to take photos to identify\n
+          - File system write - to save these photos\n
+          - File system read - to load these photos to identify\n
+        \nAll data and files are stored entirely on your device and never collected on our servers.\n
+        These terms may be updated as functionality is added to the app. You will be notified of changes
+        in a launcher like this one, but the most current privacy policy will always be found at &privacyurl;.
+    </string>
+    <string name="confirm_privacy">I accept the normal use of my data in this app (Macroinvertebrate
+    Classifier) as described by the privacy policy at &privacyurl;.</string>
+    <string name="submit_privacy">Accept</string>
+    <string name="privacy_please_check">Please click the above checkbox to confirm.</string>
 </resources>

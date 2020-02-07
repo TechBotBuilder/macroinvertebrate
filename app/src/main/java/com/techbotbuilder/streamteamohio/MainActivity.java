@@ -16,7 +16,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkFirstOpen();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        checkPrivacy();
     }
 
     /** Called when user taps Classify button */
@@ -30,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void checkFirstOpen(){
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        String firstRunKey = "FIRST_RUN";
-        if (prefs.getBoolean(firstRunKey, true)) {
-            Notifier.longNotify(this, "Please provide your feedback!");
-            prefs.edit().putBoolean(firstRunKey, false).apply();
+    private void checkPrivacy(){
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+        if (prefs.getString(PrivacyActivity.hasAcceptedKey, null)!=PrivacyActivity.PRIVACY_VERSION) {
+            Notifier.longNotify(this, getString(R.string.privacy_required));
+            Intent intent  = new Intent(this, PrivacyActivity.class);
+            startActivity(intent);
         }
 
     }
