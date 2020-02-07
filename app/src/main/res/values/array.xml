@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="classes">
+        <item>Aquatic worm</item>
+        <item>Black fly</item>
+        <item>Caddisfly</item>
+        <item>Clam/Mussel</item>
+        <item>Crane fly</item>
+        <item>Crayfish</item>
+        <item>Damselfly</item>
+        <item>Dobsonfly</item>
+        <item>Dragonfly</item>
+        <item>Gilled snail</item>
+        <item>Leech</item>
+        <item>Lunged snail</item>
+        <item>Mayfly</item>
+        <item>Midge fly</item>
+        <item>Planaria</item>
+        <item>Rat-tailed maggot</item>
+        <item>Riffle beetle</item>
+        <item>Scud</item>
+        <item>Sowbug</item>
+        <item>Stonefly</item>
+        <item>Water penny beetle</item>
+    </string-array>
+
+    <!-- Reply Preference -->
+    <string-array name="model_entries">
+        <item>Accurate</item>
+        <item>Fast</item>
+    </string-array>
+    <string-array name="model_values">
+        <item>models/inception_v3.tflite</item>
+        <item>models/small_vgg.tflite</item>
+    </string-array>
+</resources>

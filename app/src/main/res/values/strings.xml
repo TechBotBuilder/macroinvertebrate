@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">Macroinvertebrate Classifier (Alpha)</string>
+    <string name="app_version">0.0.1-alpha</string>
+    <string name="title_version">Alpha</string>
+    <string name="url_faq">https://techbotbuilder.github.io/macroinvertebrate/faq</string>
+    <string name="preference_file_key">com.techbotbuilder.streamteamohio.PREFERENCE_FILE_KEY</string>
+    <string name="default_model">models/inception_v3.tflite</string>
+    <string name="go_to_classifier">Classify</string>
+    <string name="go_to_reporter">Create Report (WIP)</string>
+    <string name="go_to_options">Options</string>
+    <string name="go_to_about">About</string>
+    <string name="no_camera">No camera found</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="took_picture">Picture Taken</string>
+    <string name="processing">Processing Picture</string>
+    <string name="completed_processing">Classification Complete</string>
+    <string name="about_1">This is the about page.\n
+        \nThe current state of this app is a usable image classifier, for offline, in the field.
+        \n\n
+        \nThis app can be used to identify 21 taxa of benthic (freshwater/river) macroinvertebrates,.\n
+        \nThe report functionality generates PDFs for Licking County\'s Stream Team or
+        the Ohio Historic River\'s Stream Quality Monitoring (SQM) programs.
+        Contact the developer if you would like to add compatibility with your program.\n
+        \nDeveloped by Maxwell Budd.\n\n
+        \n\nThis app uses the following Open-source libraries:\n
+         - Joda-time\n
+         - tensorflow-litej\n
+         - PDFBox\n
+    </string>
+    <string name="about_2">
+        <!-- TODO -->
+        The offline macroinvertebrate classifier included in this version of the app reaches
+        (???)% accuracy on images it has never seen. Trust your judgement and double-check with
+        the binary search tool (ICON).
+    </string>
+    <string name="known_problems">
+        No generic beetle larvae category is classified with the image search function (the
+        three-group macroinvertebrate tally asks about generic beetles).
+    </string>
+    <string name="resources">
+        More Resources (not associated with this app):\n\n
+        https://macroinvertebrates.org: online high-res image set with explanations and guides
+            to practice identifying macroinvertebrates yourself.\n
+        https://iNaturalist.org: upload images and location to contribute to online nature tracking
+            community effort. Others can help you identify. App also available from inaturalist.org.\n
+        https://LifeInFreshWater.net: more information on each taxon.
+    </string>
+    <string name="load_image_from_file">Choose File</string>
+    <string name="classify_files">Classify files</string>
+    <string name="choose_new_form">Fill out a new report</string>
+    <string name="choose_old_form">Complete/edit an old report</string>
+    <string name="form_go">Go</string>
+    <string name="no_prior_forms_error">No prior forms found.</string>
+    <string name="no_template_forms_error">Error: no form templates found.</string>
+    <string name="form_section">Section: </string>
+    <string name="file_not_found">FILE NOT FOUND</string>
+
+    <string name="report_save_before_exit">Save before exit?</string>
+    <string name="report_confirm_save_new">Save as new report</string>
+    <string name="report_confirm_save_overwrite">Overwrite old data</string>
+    <string name="report_deny_quit_nosave">Quit without saving</string>
+    <string name="report_cancel">Cancel and return to editing form</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="date_format">mm/dd/yyyy</string>
+    <string name="choose_date">Choose a date</string>
+    <string name="choose_time">Choose a time</string>
+
+    <string name="warning_rec_max_queue">Warning: queueing additional images may slow your device.</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="pref_models_header">Classification</string>
+    <string name="pref_header_about">About</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="models_title">Default model</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>

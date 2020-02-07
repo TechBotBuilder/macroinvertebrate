@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form id="lcst12" name="Licking County Stream Team">
+    <meta>
+        <formtype>Licking County Stream Team 2012</formtype>
+        <formid>TEMPLATE</formid>
+        <datetime-created />
+        <datetime-modified />
+    </meta>
+    <page name="Monitoring Site Delineation" id="monitoring_site">
+        <text id="stream_name" name="Stream Name" />
+        <text id="county" name="County">Licking</text>
+        <text name="State" />
+        <text name="Watershed Address" />
+        <text name="Investigators" hint="# Adults and/or # of Students" lines="2" />
+        <text name="Site Description" lines="3" />
+        <date name="Date" />
+        <time name="Time" />
+        <weather name="Weather in past 24 hours" id="weather_past" />
+        <weather name="Weather now" id="weather_now" />
+        <text name="Other factors or conditions you think may affect today's observations" id="otherfactors" lines="2" />
+        <text name="Comments" hint="Note changes or potential problems such as spills, new construction, type of discharging pipes, etc." id="comments" lines="3" />
+    </page>
+    <page name="Site Description">
+        <photo name="Sketch or Photo of Monitoring Site" id="sitephoto"
+            hint="On your sketch, note features that affect stream habitat such as: riffles, runs, pools, ditches,
+            wetlands, dams, riprap, discharge pipes, tributaries, landscape features, vegetation, roads, etc." />
+        <table name="Chemical Test Record" >
+            <entry>
+                <label>Date</label>
+                <label>Result</label>
+                <label>Help</label>
+                <label>Safety</label>
+            </entry>
+            <entry name="Temperature" hint="@temperature_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Turbidity" hint="@turbidity_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="pH" hint="@ph_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Phosphate" hint="@phosphate_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Nitrate" hint="@nitrate_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Dissolved Oxgen (DO)" hint="@do_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Biological Oxygen Demand (BOD)" hint="@bod_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Coliform Bacteria" hint="@coliform_bacteria_guide">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+            <entry name="Other" hint="(Not required, Specify type of test in results column)">
+                <date name="Date" />
+                <text name="Result" />
+                <safety hint="" />
+            </entry>
+        </table>
+    </page>
+
+    <page name="Citizen's Qualitative Habitat Evaluation Index"
+        help="For most Metrics Intermediate Conditions Can Be Denoted By Checking Two Boxes and Averaging The Scores">
+        <section>
+            <number name="CQHEI Score" id="cqhei_score" noedit="true" calculated="true" help="@CQHEI_guidelines" />
+            <date name="Date" id="CQHEIdate" />
+            <text name="River Code" />
+            <number name="River Mile" />
+            <text name="River/Site" />
+            <Checkbox name="Length of Reach Evaluated"  maxcheck="1"  help="in meters (">
+                <box name="150 m" />
+                <box name="200 m" />
+                <box name="500 m" />
+                <box name="other" >
+                    <integer name="specify" />
+                </box>
+            </Checkbox>
+        </section>
+
+        <section name="I. Substrate (Bottom Type)">
+            <number name="Score" id="substrate_score" noedit="true" calculated="true" />
+            <Checkbox name="Size" id="substratesize" maxcheck="2" multicheck="average" >
+                <box name="Mostly Large (Fist Size or Bigger)" value="14" />
+                <box name="Mostly Medium (Smaller Than Fist, Bigger Than Fingernail)" v="10" />
+                <box name="Mostly Small (Smaller Than Fingernail, But Still Coarse)" v="6" />
+                <box name="Mostly Very Fine (Not Coarse, Sometimes Greasy or Mucky)" v="0" />
+            </Checkbox>
+            <Checkbox name="Smothering" id="substratesmothering" maxcheck="1"
+                help="Are Fist Size and Larger Pieces Smothered by Sands/Silts? \n \nSymptoms:\n Hard to move large pieces. Often large pieces are black on the bottom with few insects." >
+                <box name="Yes" v="0" />
+                <box name="No" v="5" />
+            </Checkbox>
+            <Checkbox name="Silting" id="substratesilting" maxcheck="1"
+                help="Are Silts and Clays Distributed Throughout Stream? \n \nSymptoms:\n Light kicking of streambed results in substantial clouding of stream for more than a minute or two." >
+                <box name="Yes" v="0" />
+                <box name="No"  v="5" />
+            </Checkbox>
+        </section>
+
+        <section name="II. Fish Cover (Hiding Places) - Check All Conditions That Are Present in the Evaluated Area" >
+            <number id="fishcover_score" noedit="true" calculated="true" />
+            <Checkbox id="fishcover" multicheck="sum" >
+                <box name="backwatersoxbowssidechannels" v="2" />
+                <box name="deepareas" v="2" />
+                <box name="shallowslowareas" v="2" />
+                <box name="undercutbanks" v="2" />
+                <box name="shrubscloseoverbank" v="2" />
+                <box name="downedtreeslogsbranches" v="2" />
+                <box name="underwatertreerootslarge" v="2" />
+                <box name="underwatertreerootletsfine" v="2" />
+                <box name="waterplants" v="2" />
+                <box name="boulders" v="2" />
+            </Checkbox>
+        </section>
+
+        <section name="III. Stream Shape and Human Alterations" >
+            <number id="streamshapehumanalterations_score" noedit="true" calculated="true" />
+            <Checkbox name="'Curviness' or 'Sinuousity' of Channel" id="channelcurviness" maxcheck="2" multicheck="average" >
+                <box name="Very Straight" v="0" img="sinuousity_straight.jpeg" />
+                <box name="Mostly Straight Some 'Wiggle'" v="3" img="sinuousity_mostlystraight.jpeg" />
+                <box name="1 or 2 Good Bends" v="6" img="sinuousity_1or2goodbends.jpeg" />
+                <box name="2 or More Good Bends" v="8" img="sinuousity_2ormoregoodbends.jpeg" />
+            </Checkbox>
+            <Checkbox name="How Natural Is This Site" id="hownatural" maxcheck="2" multicheck="average" >
+                <box name="Mostly Natural" v="12" />
+                <box name="A Few Minor Man-made Changes (e.g., bridge, some streambank changes)" v="9" />
+                <box name="Many Man-made Changes, but still some natural conditions left (e.g., trees, meanders)" v="6" />
+                <box name="Heavy, Man-made Changes (e.g., channelized, leveed,)" v="0" />
+            </Checkbox>
+        </section>
+
+        <section name="IV. Stream Forests &amp; Wetlands ('Riparian Area') &amp; Erosion" >
+            <number id="streamforestswetlandserosion_score" noedit="true" calculated="true" />
+            <Checkbox name="Width - Mostly:" id="width" maxcheck="2" multicheck="average" >
+                <box name="Wide (Can't Throw A Rock Across It)" v="8" />
+                <box name="Narrow (Can Throw A Rock Across It)" v="5" />
+                <box name="None" v="0" />
+            </Checkbox>
+            <Checkbox name="Land Use - Mostly:" id="landuse" maxcheck="4" multicheck="average" >
+                <box name="Forest/Wetland" v="5" />
+                <box name="Shrubs" v="4" />
+                <box name="Overgrown Fields" v="3" />
+                <box name="Fenced Pasture" v="2" />
+                <box name="Park (Grass)" v="2" />
+                <box name="Conservation Tillage" v="2" />
+                <box name="Suburban" v="1" />
+                <box name="Rowcrop" v="1" />
+                <box name="Open Pasture" v="0" />
+                <box name="Urban/Industrial" v="0" />
+            </Checkbox>
+            <Checkbox name="Bank Erosion - Typically:" id="bankerosion" maxcheck="2" multicheck="average" >
+                <box name="Raw, Collapsing Banks" v="0" />
+                <box name="Combination of Stable and Eroding Banks" v="2" />
+                <box name="Stable Hard or Well Vegetated Banks" v="4" />
+            </Checkbox>
+            <Checkbox name="How Much of Stream is Shaded?" id="howmuchshaded" maxcheck="2" multicheck="average" >
+                <box name="Mostly" v="3" />
+                <box name="Partly" v="2" />
+                <box name="None" v="0" />
+            </Checkbox>
+        </section>
+
+        <section name="V. Depth &amp; Current Velocity">
+            <number id="depthcurrentvelocity_score" noedit="true" calculated="true" />
+            <Checkbox name="Deepest Pool Is At Least:" id="deepestpool" maxcheck="2" multicheck="average" >
+                <box name="Chest Deep" v="8" />
+                <box name="Waist Deep" v="6" />
+                <box name="Knee Deep" v="4" />
+                <box name="Ankle Deep" v="0" />
+            </Checkbox>
+            <Checkbox name="Check ALL The Flow Types That You See:" id="allflowtypes" multicheck="sum" >
+                <box name="Very Fast: Hard to Stand in the Current" v="2" />
+                <box name="Fast: Quickly Takes Objects Downstream" v="3" />
+                <box name="Moderate: Slowly Takes Objects Downstream" v="1" />
+                <box name="Slow: Flow Nearly Absent" v="1" />
+                <box name="No Flo" v="0" />
+            </Checkbox>
+        </section>
+
+        <section name="VI. Riffles/Runs" help="Areas where Current is Fast/Turbulent, Surface may be Broken">
+            <number id="rifflesruns_score" noedit="true" calculated="true" />
+            <Checkbox name="Riffles/Runs Are:" id="rifflesrunsare" maxcheck="2" multicheck="average" >
+                <box name="Knee Deep or Deeper &amp; Fast" v="8" />
+                <box name="Ankle/Calf Deep &amp; Fast" v="6" />
+                <box name="Ankle Deep or Less and Slow" v="4" />
+                <box name="Does Not Exist" v="0" />
+            </Checkbox>
+            <Checkbox name="Riffles/Run Substrates Are:" id="rifflerunsubstratesare" maxcheck="2" multicheck="average" >
+                <box name="Fist Size or Larger" v="7" />
+                <box name="Smaller Than Fist Size, but Larger Than Fingernail" v="6" />
+                <box name="Smaller Than Your Fingernails" v="0" />
+            </Checkbox>
+        </section>
+
+        <calculated result="substrate_score" type="SUM" values="substratesize substratesmothering substratesilting" />
+        <calculated result="fishcover_score" type="SUM fishcover" />
+        <calculated result="streamshapehumanalterations_score" type="SUM" values="channelcurviness hownatural" />
+        <calculated result="streamforestswetlandserosion_score" type="SUM" values="width landuse bankerosion howmuchshaded" />
+        <calculated result="depthcurrentvelocity_score" type="SUM" values="deepestpool allflowtypes" />
+        <calculated result="rifflesruns_score" type="SUM" values="rifflesrunsare rifflerunsubstratesare" />
+        <calculated result="cqhei_score" type="SUM"
+            values="substrate_score fishcover_score streamshapehumanalterations_score streamforestswetlandserosion_score depthcurrentvelocity_score rifflesruns_score" />
+    </page>
+
+    <page name="Biological Monitoring Data Sheet" help="@biologicalmonitoring_procedure" >
+        <section>
+            <date name="mmddyy" />
+            <time name="Begin Time" />
+            <time name="End Time" />
+            <integer name="# Adults "/>
+            <integer name="# Students/Youth" />
+            <text name="Certified Monitors' Names" />
+            <text name="Organization Name" hint="If applicable" />
+            <watershed name="Watershed Name" />
+            <text name="Stream/River Name (Please do not abbreviate)" />
+            <gpscoords name="GPS Coordinates" hint="If available" />
+        </section>
+        <section>
+            <Checkbox name="Check Methods Used" id="checkmethodsused">
+                <box name="Kick Seine Net" />
+                <box name="Dip Net" />
+            </Checkbox>
+            <Checkbox name="Check Habitats Sampled" id="checkhabitatssampled" >
+                <box name="Riffles" />
+                <box name="Undercut Banks" />
+                <box name="Sediment" />
+                <box name="Leaf Packs" />
+                <box name="Snags/Vegetation" />
+                <box name="Other" />
+            </Checkbox>
+        </section>
+
+        <section name="Pollution Tolerance Index (PTI)" hint="Indicate whether each taxon is present in your sample.">
+            <!--@TODO: implement with photo-picker and identification key-->
+            <classifier groups="4" userdisplay="checkboxes" />
+        </section>
+
+        <section name="Other Biological Indicators">
+            <Checkbox id="otherbiologicalindicators">
+                <box name="Native Mussels" />
+                <box name="Zebra Mussels" />
+                <box name="Rusty Crayfish" />
+                <box name="Aquatic Plants" />
+            </Checkbox>
+            <number name="% Algae Cover" id="algaecover" />
+            <text name="List Additional Species Found" id="additionalspecies" lines="3" />
+        </section>
+    </page>
+
+</form>
