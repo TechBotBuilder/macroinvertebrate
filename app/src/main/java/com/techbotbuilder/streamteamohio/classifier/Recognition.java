@@ -48,13 +48,15 @@ public class Recognition implements Serializable {
     }
 
     public Recognition(Uri uri, float[] confidences){
-        this(uri, uri.getLastPathSegment(), confidences);
+        this(uri, uri.getEncodedPath(), confidences);
     }
     public Recognition(Uri uri){
         this(uri, new float[]{0});
     }
 
+    public static final int NOT_SET = -1;
     public int getIndexRanked(int ranking){
+        if (sortedConfidences.length == 1) return NOT_SET;
         if (ranking < sortedConfidences.length) return sortedConfidences[ranking];
         else return sortedConfidences.length-1;
     }

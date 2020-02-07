@@ -45,14 +45,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recognition recognition = data.get(position);
         holder.title.setText(recognition.getTitle());
-        String format = "%s: %04.1f%%";
-        int i0 = recognition.getIndexRanked(0);
-        int i1 = recognition.getIndexRanked(1);
-        int i2 = recognition.getIndexRanked(2);
-        holder.res1.setText(String.format(Locale.getDefault(), format, classes[i0], 100*recognition.getConfidence(i0)));
-        holder.res2.setText(String.format(Locale.getDefault(), format, classes[i1], 100*recognition.getConfidence(i1)));
-        holder.res3.setText(String.format(Locale.getDefault(), format, classes[i2], 100*recognition.getConfidence(i2)));
+        setRecognitionResultInHolder(holder.res1, recognition, 0);
+        setRecognitionResultInHolder(holder.res2, recognition, 1);
+        setRecognitionResultInHolder(holder.res3, recognition, 2);
         Glide.with(holder.thumb).load(recognition.getUri()).centerCrop().into(holder.thumb);
+    }
+    private void setRecognitionResultInHolder(TextView resultView, Recognition recognition, int rank){
+        String format = "%s: %04.1f%%";
+        int i = recognition.getIndexRanked(rank);
+        if (i==Recognition.NOT_SET){
+            resultView.setText("Pending...");
+        }else {
+            resultView.setText(String.format(Locale.getDefault(), format, classes[i], 100 * recognition.getConfidence(i)));
+        }
     }
 
     @Override

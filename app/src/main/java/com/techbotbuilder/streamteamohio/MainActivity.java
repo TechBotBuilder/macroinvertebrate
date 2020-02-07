@@ -1,18 +1,14 @@
 package com.techbotbuilder.streamteamohio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.techbotbuilder.streamteamohio.Utils.Notifier;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,58 +20,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Called when user taps Classify button */
-    public void classifier(View view){
+    public void classifier(View view){ goToClassifier(); }
+    private void goToClassifier(){
         Intent intent  = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
     }
-    public void reporter(View view){
-        Notifier.notify(this, "Warning: work in progress");
-        Intent intent  = new Intent(this, ChooseReportActivity.class);
-        startActivity(intent);
-    }
-    public void options(View view){
-        Notifier.notify(this, "Work in progress");
-        /*
-        Intent intent  = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    */}
     public void about(View view){
         Intent intent  = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
 
-    //TODO
-    private static final String initFileName = "init.txt";
     private void checkFirstOpen(){
-        boolean firstOpen = false;
-        InputStream is = null;
-        try{
-            is = openFileInput(initFileName);
-        }catch(FileNotFoundException e){
-            firstOpen = true;
-        } finally {
-            if (is != null)
-                try {is.close();} catch(IOException e){e.printStackTrace();}
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        String firstRunKey = "FIRST_RUN";
+        if (prefs.getBoolean(firstRunKey, true)) {
+            Notifier.longNotify(this, "Please provide your feedback!");
+            prefs.edit().putBoolean(firstRunKey, false).apply();
         }
 
-        if (!firstOpen) return;
-
-        Notifier.longNotify(this, "FIRST LAUNCH");
-        //if it is the first open, copy asset files into 'template' directory
-        OutputStream os = null;
-        try {
-            String[] templates = getAssets().list("templates");
-            //for (String templateName : templates){
-            //    InputStream a = FormManager.getTemplateStream(this, templateName);
-            //    InputStreamReader x = new InputStreamReader(a);
-            //}
-            os = openFileOutput(initFileName, Context.MODE_PRIVATE);
-            os.write(new byte[]{});
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally{
-            if(os!=null)
-                try{ os.close(); } catch(IOException e){e.printStackTrace();}
-        }
     }
 }

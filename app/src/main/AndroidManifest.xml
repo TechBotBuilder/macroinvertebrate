@@ -5,12 +5,8 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-    <uses-feature
-        android:name="android.hardware.location.gps"
-        android:required="false" />
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- TODO: make these permissions optional -->
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -20,12 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ChooseReportActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".FillReportActivity"
-            android:parentActivityName=".ChooseReportActivity" />
         <activity
             android:name=".AboutActivity"
             android:parentActivityName=".MainActivity" />

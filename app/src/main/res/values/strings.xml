@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Macroinvertebrate Classifier (Alpha)</string>
+    <string name="app_name">Macroinvertebrate Classifier</string>
     <string name="app_version">0.0.1-alpha</string>
     <string name="title_version">Alpha</string>
     <string name="url_faq">https://techbotbuilder.github.io/macroinvertebrate/faq</string>
     <string name="preference_file_key">com.techbotbuilder.streamteamohio.PREFERENCE_FILE_KEY</string>
+    <string name="icon_description">Silhouette of a stonefly in a circle</string>
     <string name="default_model">models/inception_v3.tflite</string>
     <string name="go_to_classifier">Classify</string>
     <string name="go_to_reporter">Create Report (WIP)</string>
@@ -14,18 +15,41 @@
     <string name="took_picture">Picture Taken</string>
     <string name="processing">Processing Picture</string>
     <string name="completed_processing">Classification Complete</string>
-    <string name="about_1">This is the about page.\n
-        \nThe current state of this app is a usable image classifier, for offline, in the field.
+    <string name="about_page">About</string>
+    <string name="about_1">
+        \nThe current state of this app is:\n
+        - a usable image classifier, for offline, in the field.
         \n\n
-        \nThis app can be used to identify 21 taxa of benthic (freshwater/river) macroinvertebrates,.\n
-        \nThe report functionality generates PDFs for Licking County\'s Stream Team or
-        the Ohio Historic River\'s Stream Quality Monitoring (SQM) programs.
-        Contact the developer if you would like to add compatibility with your program.\n
-        \nDeveloped by Maxwell Budd.\n\n
-        \n\nThis app uses the following Open-source libraries:\n
+        \nThis app can be used to identify 21 taxa of benthic (freshwater/river) macroinvertebrates:\n
+Aquatic worm\n
+Black fly\n
+Caddisfly\n
+Clam/mussel\n
+Crane fly\n
+Crayfish\n
+Damselfly\n
+Dobsonfly\n
+Dragonfly\n
+Gilled snails\n
+Leech\n
+Lunged snails\n
+Mayfly\n
+Midge fly\n
+Planaria\n
+Rat-tailed maggot\n
+Riffle beetle\n
+Scud\n
+Sowbug\n
+Stonefly\n
+Water penny beetle\n
+        \n
+        \nThe (planned) report functionality generates PDFs for Licking County\'s Stream Team or
+        the Ohio Historic River\'s Stream Quality Monitoring (SQM) programs.\n
+        \nDeveloped by Maxwell Budd.\n
+        \nThis app uses the following Open-source libraries:\n
          - Joda-time\n
-         - tensorflow-litej\n
-         - PDFBox\n
+         - Glide\n
+         - Tensorflow-litej\n
     </string>
     <string name="about_2">
         <!-- TODO -->
@@ -43,7 +67,7 @@
             to practice identifying macroinvertebrates yourself.\n
         https://iNaturalist.org: upload images and location to contribute to online nature tracking
             community effort. Others can help you identify. App also available from inaturalist.org.\n
-        https://LifeInFreshWater.net: more information on each taxon.
+        https://LifeInFreshWater.net: more information on each taxon.\n\n
     </string>
     <string name="load_image_from_file">Choose File</string>
     <string name="classify_files">Classify files</string>
@@ -76,13 +100,5 @@
     <string name="pref_header_about">About</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
     <string name="models_title">Default model</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
