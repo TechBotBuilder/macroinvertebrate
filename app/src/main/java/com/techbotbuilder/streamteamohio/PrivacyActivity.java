@@ -29,11 +29,11 @@ public class PrivacyActivity extends AppCompatActivity {
 
     public void onAccept(View v){
         if (findBox.isChecked()) {
-            getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
+            getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
                     .edit()
                     .putString(PrivacyActivity.hasAcceptedKey, PRIVACY_VERSION)
                     .apply();
-            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }else{
             Notifier.notify(this, R.string.privacy_please_check);
         }

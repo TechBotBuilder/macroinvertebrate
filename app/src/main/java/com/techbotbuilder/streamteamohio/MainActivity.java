@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkPrivacy(){
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
-        if (prefs.getString(PrivacyActivity.hasAcceptedKey, null)!=PrivacyActivity.PRIVACY_VERSION) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+        if (!PrivacyActivity.PRIVACY_VERSION.equals(prefs.getString(PrivacyActivity.hasAcceptedKey, null))) {
             Notifier.longNotify(this, getString(R.string.privacy_required));
             Intent intent  = new Intent(this, PrivacyActivity.class);
             startActivity(intent);
