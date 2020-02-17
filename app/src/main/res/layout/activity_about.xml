@@ -58,10 +58,19 @@
                 android:id="@+id/about_privacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="32dp"
                 android:autoLink="web"
                 android:linksClickable="true"
                 android:text="@string/privacy_url" />
+
+            <TextView
+                android:id="@+id/developer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/developer_info" />
         </LinearLayout>
     </ScrollView>
 

@@ -21,8 +21,11 @@
     <string name="completed_processing">Classification Complete</string>
     <string name="about_page">About</string>
     <string name="about_1">
-        \nThe current state of this app is:\n
-        - a usable image classifier, for offline, in the field.
+        \nMacroinvertebrate Classifier is an image classifier, for offline, in the field.\n
+        \nThe classifier has the correct macroinvertebrate 80% of the time in its top 3 predictions.
+        (That becomes 88% among the top 5 predictions.)
+        \nThe top prediction is correct 60% of the time, so if possible, take multiple images of
+          the same specimen and confirm the predictions based on a textual description.
         \n\n
         \nThis app can be used to identify 21 taxa of benthic (freshwater/river) macroinvertebrates:\n
 Aquatic worm\n
@@ -34,9 +37,9 @@ Crayfish\n
 Damselfly\n
 Dobsonfly\n
 Dragonfly\n
-Gilled snails\n
+Gilled snail\n
 Leech\n
-Lunged snails\n
+Lunged snail\n
 Mayfly\n
 Midge fly\n
 Planaria\n
@@ -47,7 +50,9 @@ Sowbug\n
 Stonefly\n
 Water penny beetle\n
         \n
-        \nThe (planned) report functionality generates PDFs for Licking County\'s Stream Team or
+    </string>
+    <string name="developer_info">
+        \nThe (planned) report functionality will generate PDFs for Licking County\'s Stream Team or
         the Ohio Historic River\'s Stream Quality Monitoring (SQM) programs.\n
         \nDeveloped by Maxwell Budd.\n
         \nThis app uses the following Open-source libraries:\n
@@ -55,23 +60,17 @@ Water penny beetle\n
          - Glide\n
          - Tensorflow-litej\n
     </string>
-    <string name="about_2">
-        <!-- TODO -->
-        The offline macroinvertebrate classifier included in this version of the app reaches
-        (???)% accuracy on images it has never seen. Trust your judgement and double-check with
-        the binary search tool (ICON).
-    </string>
     <string name="known_problems">
         No generic beetle larvae category is classified with the image search function (the
         three-group macroinvertebrate tally asks about generic beetles).
     </string>
     <string name="resources">
-        More Resources (not associated with this app):\n\n
-        https://macroinvertebrates.org: online high-res image set with explanations and guides
+        More Resources (not associated with this app):\n
+        \nhttps://macroinvertebrates.org: online high-res image set with explanations and guides
             to practice identifying macroinvertebrates yourself.\n
-        https://iNaturalist.org: upload images and location to contribute to online nature tracking
-            community effort. Others can help you identify. App also available from inaturalist.org.\n
-        https://LifeInFreshWater.net: more information on each taxon.\n\n
+        \nhttps://iNaturalist.org: upload images and location to contribute to online nature tracking
+            community effort. Others can help you identify. iNat app available from inaturalist.org.\n
+        \nhttps://LifeInFreshWater.net: more information on each taxon.\n\n
     </string>
     <string name="load_image_from_file">Choose File</string>
     <string name="classify_files">Classify files</string>
